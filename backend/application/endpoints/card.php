@@ -19,15 +19,23 @@ $app->delete('/card/:id', function ($id) use ($app, $db) {
 	echo "Card delete: $id";
 });
 
-$app->get('/card/:id/door', function ($id) use ($app, $db) {
-	echo "Card door get: $id";
+$app->get('/card/:id/ports', function ($id) use ($app, $db) {
+	echo "Card port get: $id";
 });
 
-$app->post('/card/:id/door', function ($id) use ($app, $db) {
-	echo "Card door post: $id";
+$app->get('/card/:id/ports/:pid', function ($id, $pid) use ($app, $db) {
+	echo "Card port get: $id, $pid";
 });
 
-$app->get('/card/:id/door/:did', function ($id, $did) use ($app, $db) {
-	echo "Card door delete: $id, $did";
+$app->get('/card/:id/ports/:pid/door', function ($id, $pid) use ($app, $db) {
+	echo "Card port get: $id, $pid";
+});
+
+$app->post('/card/:id/ports/:pid/door', function ($id, $pid) use ($app, $db) {
+	echo "Card port post: $id, $pid";
+});
+
+$app->get('/card/:id/ports/:pid/door/:did', function ($id, $pid, $did) use ($app, $db) {
+	echo "Card port delete: $id, $pid, $did";
 });
 ?>
