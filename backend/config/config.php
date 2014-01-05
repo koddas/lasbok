@@ -7,5 +7,6 @@ $config = array(
 		'server' => 'localhost',
 		'username' => '176690_ss17621',
 		'password' => '994deenajs',
+		'charset' => 'utf8'
 	)
 );

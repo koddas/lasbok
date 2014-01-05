@@ -18,6 +18,7 @@ $app->get('/user/:id', function ($id) use ($app, $db) {
 });
 
 $app->post('/user', function () use ($app, $db) {
+	// TODO: Kontrollera om användaren har behörighet att skapa användare
 	$username = $app->request->post('username');
 	$password = $app->request->post('password');
 	$first_name = $app->request->post('first_name');
@@ -34,6 +35,9 @@ $app->post('/user', function () use ($app, $db) {
 	$errors = $db->error();
 	
 	switch (intval($errors[0])) {
+		case 0:
+			$app->response()->status(201);
+			break;
 		case 23000:
 			$app->halt(409, "User '$username' already exists");
 			break;
@@ -43,6 +47,7 @@ $app->post('/user', function () use ($app, $db) {
 });
 
 $app->put('/user/:id', function ($id) use ($app, $db) {
+	// TODO: Kontrollera om användaren har behörighet att ändra användare
 	$password = $app->request->put('password');
 	$current_password = $app->request->put('current_password');
 	$first_name = $app->request->put('first_name');
@@ -89,18 +94,57 @@ $app->put('/user/:id', function ($id) use ($app, $db) {
 });
 
 $app->delete('/user/:id', function ($id) use ($app, $db) {
-	echo "User delete: $id";
+	// TODO: Kontrollera om användaren har behörighet att ta bort användare
+	$db->delete('Users', array('user_name' => $id));
 });
 
 $app->get('/user/:id/roles', function ($id) use ($app, $db) {
-	echo "User roles get: $id";
+	$cols = array('name', 'description');
+	$select = array('User_has_User_roles.Users_user_name' => $id);
+	$join = array('[>]User_has_User_roles'=> array('id' => 'user_roles_id'));
+	
+	$roles = $db->select('User_roles', $join, $cols, $select);
+	
+	echo json_encode($roles, JSON_FORCE_OBJECT | JSON_UNESCAPED_UNICODE);
 });
 
 $app->post('/user/:id/roles', function ($id) use ($app, $db) {
-	echo "User roles post: $id";
+	// TODO: Kontrollera om användaren har behörighet att ge användare nya roller
+	$role = $app->request->post('role');
+	
+	if (intval($role) < 1) {
+		$app->halt(400, 'Bad request');
+	}
+	
+	$values = array('Users_user_name' => $id,
+					'User_roles_id' => $role);
+	
+	$db->insert('User_has_User_roles', $values);
+	
+	$errors = $db->error();
+	
+	switch (intval($errors[0])) {
+		case 0:
+			$app->response()->status(201);
+			break;
+		case 23000:
+			$app->halt(409, "User 'id' already has this role");
+			break;
+		default:
+			$app->halt(500, $errors[2]);
+	}
 });
 
-$app->get('/user/:id/roles/:rid', function ($id, $rid) use ($app, $db) {
-	echo "User roles delete: $id, $rid";
+$app->delete('/user/:id/roles/:rid', function ($id, $rid) use ($app, $db) {
+	// TODO: Kontrollera om användaren har behörighet att ta bort användares roller
+	
+	if (intval($rid) < 1) {
+		$app->halt(400, 'Bad request');
+	}
+	
+	$values = array('AND' => array('Users_user_name' => $id,
+								   'User_roles_id' => $rid));
+	
+	$db->delete('User_has_User_roles', $values);
 });
 ?>
