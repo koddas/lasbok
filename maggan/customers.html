@@ -1,0 +1,235 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Strickt//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Södra Skånes bokningssystem</title>
+<link rel="stylesheet" type="text/css" href="resources/stylesheets/main.css" />
+<link rel="stylesheet" type="text/css" href="resources/stylesheets/dialogs.css" />
+<link rel="stylesheet" type="text/css" href="resources/stylesheets/footable.css" />
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
+<link href="resources/javascript/footable/css/footable.sortable-0.1.css" rel="stylesheet" type="text/css" />
+<link href="resources/javascript/footable/css/footable.paginate.css" rel="stylesheet" type="text/css" />
+<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+<script src="resources/javascript/footable/js/footable.js" type="text/javascript"></script>
+<script src="resources/javascript/footable/js/footable.sortable.js" type="text/javascript"></script>
+<script src="resources/javascript/footable/js/footable.paginate.js" type="text/javascript"></script>
+<script src="resources/javascript/footable/js/footable.filter.js" type="text/javascript"></script>
+<script type="text/javascript">
+    $(function() {
+      $('table').footable();
+      
+      $('.clear-filter').click(function (e) {
+          e.preventDefault();
+          $('table').trigger('footable_clear_filter');
+      });
+		
+	  $( "a.button" )
+	    .button();
+		
+		$( "#navigation-space a.button" )
+	      .button({
+	    	  icons: {
+	    		  primary: "ui-icon-circle-triangle-w"
+	    	  }
+	      });
+    });
+    
+    function confirmRemoval(customer) {        
+        $( "#confirm-dialog" ).dialog({
+            resizable: false,
+            modal: true,
+            dialogClass: "no-close",
+            width: 350,
+            buttons: {
+              "Ja, ta bort kund": function() {
+                alert("Tar bort kund " + customer);
+                $( this ).dialog( "close" );
+              },
+              "Nej, behåll kund": function() {
+                $( this ).dialog( "close" );
+              }
+            }
+        });
+    }
+    
+    function addCustomer() {     
+    	$( "#customer-dialog" ).prop("title", "Lägg till kund");
+    	$( "#customer-dialog" ).dialog({
+            resizable: false,
+            modal: true,
+            dialogClass: "no-close",
+            width: 350,
+            buttons: {
+              "Använd uppgifter": function() {
+                $( this ).dialog( "close" );
+              },
+              "Kasta uppgifter": function() {
+                $( this ).dialog( "close" );
+              }
+            }
+        });
+    }
+    
+
+    
+    function alterCustomer(customer) {
+    	$( "#customer-dialog" ).prop("title", "Uppdatera kund");
+    	$( "#customer-dialog" ).dialog({
+            resizable: false,
+            modal: true,
+            dialogClass: "no-close",
+            width: 350,
+            buttons: {
+              "Använd uppgifter": function() {
+                $( this ).dialog( "close" );
+              },
+              "Kasta uppgifter": function() {
+                $( this ).dialog( "close" );
+              }
+            }
+        });
+    	alert("Här ska vi ladda in " + customer);
+    }
+</script>
+</head>
+<body>
+<div id="header">
+  <div id="logo"><span>[Logotyp]</span></div>
+  <span>Södra Skånes bokningssystem</span>
+</div>
+<div id="content">
+  <div id="content-header">
+    <div id="title">Kundregister</div>
+    <div id="navigation-space">
+      <a href="main.html" class="button"><span>Tillbaka till startsida</span></a>
+    </div>
+  </div>
+  <div id="content-body">
+    <div id="search-field">
+      <span>Sök bland kunder </span>
+      <input type='text' id='filter'>
+    </div>
+    <div id="customer-table-pane">
+	  <table id="customer-table" class="footable" data-filter="#filter" data-page-size="5" frame='border' rules='all'>
+	    <thead>
+	      <tr>
+	        <th data-expander="true" data-sort-with='Kontaktperson' data-sort-initial='true'>
+	          Hyresgäst
+	        </th>
+	        <th data-sort-with='Hyresgäst'>
+	          Kontaktperson
+	        </th>
+	        <th data-sort-with='Hyresgäst,Kontaktperson'>
+	          Telefonnummer
+	        </th>
+		    <th data-sort-key='1,0'>
+		      E-postadress
+		    </th>
+		    <th data-sort-ignore="true">&nbsp;</th>
+		    <th data-sort-ignore="true">&nbsp;</th>
+	      </tr>
+	    </thead>
+	    <tbody>
+<!-- Fejkad data -->
+	      <tr>
+	        <td>Jonas Hägg</td>
+	        <td></td>
+	        <td>0414-500 66</td>
+	        <td>jonas.hagg@nara.ica.se</td>
+	        <td><a href="javascript:void(null);" onclick="alterCustomer('Jonas Hägg')">Förändra</a></td>
+	        <td><a href="javascript:void(null);" onclick="confirmRemoval('Jonas Hägg');">Ta bort</a></td>
+	      </tr>
+	      <tr>
+	        <td>Månstorps scoutkår</td>
+	        <td>Johan Holmberg</td>
+	        <td>0739-36 74 12</td>
+	        <td>johan.holmberg@manstorp.net</td>
+	        <td><a href="javascript:void(null);" onclick="alterCustomer('Månstorps scoutkår/Johan Holmberg')">Förändra</a></td>
+	        <td><a href="javascript:void(null);" onclick="confirmRemoval('Månstorps scoutkår/Johan Holmberg');">Ta bort</a></td>
+	      </tr>
+	      <tr>
+	        <td>Nils Levin</td>
+	        <td></td>
+	        <td>0709-87 65 43</td>
+	        <td>nils.levin@sjorod.se</td>
+	        <td><a href="javascript:void(null);" onclick="alterCustomer('Nils Levin')">Förändra</a></td>
+	        <td><a href="javascript:void(null);" onclick="confirmRemoval('Nils Levin');">Ta bort</a></td>
+	      </tr>
+	      <tr>
+	        <td>Tomelilla kommun</td>
+	        <td>Thomas Haskel</td>
+	        <td>0701-23 45 67</td>
+	        <td>thomas.haskel@tomelilla.se</td>
+	        <td><a href="javascript:void(null);" onclick="alterCustomer('Tomelilla kommun/Thomas Haskel')">Förändra</a></td>
+	        <td><a href="javascript:void(null);" onclick="confirmRemoval('Tomelilla kommun/Thomas Haskel');">Ta bort</a></td>
+	      </tr>
+	      <tr>
+	        <td>Trelleborgs kommun</td>
+	        <td>Gun Gunnarsson</td>
+	        <td>0410-500 66</td>
+	        <td>gun.gunnarsson@trelleborg.se</td>
+	        <td><a href="javascript:void(null);" onclick="alterCustomer('Trelleborgs kommun/Gun Gunnarsson')">Förändra</a></td>
+	        <td><a href="javascript:void(null);" onclick="confirmRemoval('Trelleborgs kommun/Gun Gunnarsson');">Ta bort</a></td>
+	      </tr>
+	      <tr>
+	        <td>Trelleborgs kommun</td>
+	        <td>Alf Larsson</td>
+	        <td>0410-123 45</td>
+	        <td>alf.larsson@trelleborg.se</td>
+	        <td><a href="javascript:void(null);" onclick="alterCustomer('Trelleborgs kommun/Alf Larsson')">Förändra</a></td>
+	        <td><a href="javascript:void(null);" onclick="confirmRemoval('Trelleborgs kommun/Alf Larsson');">Ta bort</a></td>
+	      </tr>
+	      <tr>
+	        <td>Trelleborgs kommun</td>
+	        <td>Babben Larsson</td>
+	        <td>0410-98 765</td>
+	        <td>babben.larsson@trelleborg.se</td>
+	        <td><a href="javascript:void(null);" onclick="alterCustomer('Trelleborgs kommun/Babben Larsson')">Förändra</a></td>
+	        <td><a href="javascript:void(null);" onclick="confirmRemoval('Trelleborgs kommun/Babben Larsson');">Ta bort</a></td>
+	      </tr>
+<!-- Slut på fejkad data -->
+	    </tbody>
+	  </table>
+    </div>
+    <div id="customer-navigation-pane">
+      <div id="add-customer-div">
+        <a href="javascript:void(null);" onclick="addCustomer();" class="button"><span>Lägg till kund</span></a>
+      </div>
+      <div id="customer-navigation">
+        <ul id="pagination" class="footable-nav"><span>Sidor:</span></ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Här nedanför kommer dialogrutor -->
+
+<div id="confirm-dialog" title="Ta bort kund?" class="ui-dialog">
+  <p>
+    <span class="ui-icon ui-icon-alert" style="float: left; margin: 0 7px 20px 0;"></span>
+    Du håller på att ta bort en kund. När du tagit bort den kan du inte ångra dig. Är du säker på att du vill ta bort den?
+  </p>
+</div>
+
+<div id="customer-dialog" title="Lägg till kund" class="ui-dialog">
+  <h4>Ange kontaktuppgifter</h4>
+  <form>
+    <fieldset>
+      <label for="customer" class="mandatory">Hyresgäst</label>
+      <input type="text" name="customer" id="customer" class="text ui-widget-content ui-corner-all" /><br />
+      <label for="contact_person" class="mandatory">Kontaktperson</label>
+      <input type="text" name="contact_person" id="contact_person" class="text ui-widget-content ui-corner-all" /><br />
+      <label for="phone" class="mandatory">Telefonnummer</label>
+      <input type="text" name="phone" id="phone" class="text ui-widget-content ui-corner-all" /><br />
+      <label for="email" class="mandatory">E-postadress</label>
+      <input type="text" name="email" id="email" class="text ui-widget-content ui-corner-all" /><br />
+      <label for="address" class="mandatory">Postadress</label>
+      <textarea name="address" id="address" class="text ui-widget-content ui-corner-all"></textarea><br />
+      <label for="invoicing_address">Faktureringsadress</label>
+      <textarea name="invoicing_address" id="invoicing_address" class="text ui-widget-content ui-corner-all"></textarea>
+    </fieldset>
+  </form>
+</div>
+</body>
+</html>

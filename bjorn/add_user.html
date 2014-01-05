@@ -1,0 +1,81 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Strict//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Södra Skånes bokningssystem</title>
+<link rel="stylesheet" type="text/css" href="resources/stylesheets/main.css" />
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
+<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+<script>
+	$(document).ready(function() {
+		$( "a.button" ).button({
+	    	  icons: {
+	    		  primary: "ui-icon-key"
+	    	  }
+	    });
+
+		$( "#submit-button" ).click(function() {
+			$('#create-user-form').submit();
+		});
+		
+		$( "#accordion" ).accordion({active: 1});
+	});
+</script>
+</head>
+<body>
+<div id="header">
+  <div id="logo"><span>[Logotyp]</span></div>
+  <span>Södra Skånes lås- och bokningssystem</span>
+</div>
+<div id="canvas">
+  <div id="content-header">
+    <div id="title">Välkommen, <span id="name">[namn]</span></div>
+    <div id="navigation-space"><a href="" class="button log-out-button">Logga ut</a></div>
+  </div>
+  <div id="content-body">
+    <div id="accordion">
+      <h3>Systemet</h3>
+      <div>
+        <p><a href="main.html">Startsidan</a></p>
+        <p><a href="main.html">Bokningsvyn</a></p>
+        <p><a href="main.html">Logga ut</a></p>
+      </div>
+      <h3>Användare och behörigheter</h3>
+      <div>
+        <p><a href="list_users.html">Användare</a></p>
+        <p><a href="list_privileges.html">Behörigheter</a></p>
+      </div>
+      <h3>Anläggningar</h3>
+      <div>
+        <p><a href="">Anläggning</a></p>
+        <p><a href="">Priser</a></p>
+      </div>
+      <h3>Kunder</h3>
+      <div>
+        <p><a href="">Kunder</a></p>
+        <p><a href="">Kundtyper</a></p>
+      </div>
+      <h3>Lås och tillträde</h3>
+      <div>
+        <p><a href="">Lägg till användare</a></p>
+        <p><a href="">Hantera användare</a></p>
+        <p><a href="">Hantera behörigheter</a></p>
+      </div>
+    </div>
+  </div>
+  <div id="content">
+    <div class="content-box">
+      <form action="users.html" method="post" id="create-user-form" name="create-user-form">
+        <span class="label">Förnamn</span><input type="textfield" name="first_name" id="first_name" /><br />
+        <span class="label">Efternamn</span><input type="textfield" name="last_name" id="last_name" /><br />
+        <span class="label">E-postadress</span><input type="textfield" name="email" id="email" /><br />
+        <span class="label">Lösenord</span><input type="password" name="password" id="password" /><br />
+        <span class="label">Lösenord igen</span><input type="password" name="password2" id="password2" /><br />
+        <a href="#" class="button submit-button" id="submit-button">Skapa användare</a>
+      </form>
+    </div>
+  </div>
+</div>
+</body>
+</html>

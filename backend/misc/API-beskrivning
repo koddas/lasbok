@@ -1,0 +1,99 @@
+Metod	Ändpunkt												Beskrivning
+========================================================================================================
+GET		/auth/:key												Få information om en pågående session
+POST	/auth													Starta en autentierad session
+DELETE	/auth/:key												Avsluta en autentierad session 
+GET		/user													Lista alla användare
+GET		/user/:id												Hämta info om en användare
+POST	/user													Skapa ny användare
+PUT		/user/:id												Uppdatera användare
+DELETE	/user/:id												Ta bort användare
+GET		/user/:id/roles											Lista en användares alla roller
+POST	/user/:id/roles											Lägg till en roll till en användare
+DELETE	/user/:id/roles/:id										Ta bort en roll från en användare
+GET		/role													Lista alla roller
+GET		/role/:id												Hämta info om en specifik roll
+POST	/role													Skapa en ny roll
+PUT		/role/:id												Uppdatera en roll
+DELETE	/role/:id												Ta bort en roll
+GET		/card													Lista alla styrkort
+GET		/card/:id												Hämta info om ett styrkort
+POST	/card													Skapa nytt styrkort
+PUT		/card/:id												Uppdatera ett styrkort
+DELETE	/card/:id												Ta bort ett styrkort
+GET		/card/:id/ports											Lista alla portar
+GET		/card/:id/ports/:id										Hämta info om en specifik port
+GET		/card/:id/ports/:id/door								Hämta info om dörren på en specifik port
+POST	/card/:id/ports/:id/door								Koppla en dörr till en port
+DELETE	/card/:id/ports/:id/door								Ta bort en dörr från en port
+GET		/door													Lista alla dörrar
+GET		/door/:id												Hämta info om en dörr
+POST	/door													Skapa ny dörr
+PUT		/door/:id												Uppdatera dörr
+DELETE	/door/:id												Ta bort dörr
+GET		/partition												Lista alla avdelningar
+GET		/partition/:id											Hämta info om en avdelning
+POST	/partition												Skapa ny avdelning
+PUT		/partition/:id											Uppdatera avdelning
+DELETE	/partition/:id											Ta bort en avdelning
+GET		/partition/:id/doors									Lista alla dörrar i en avdelning
+POST	/partition/:id/doors									Lägg till en dörr i en avdelning
+DELETE	/partition/:id/doors/:id								Ta bort en dörr ur en avdelning
+GET		/facililty												Lista alla faciliteter
+GET		/facililty/:id											Hämta info om en facilitet
+POST	/facililty/												Skapa ett facilitet
+PUT		/facililty/:id											Uppdatera en facilitet
+DELETE	/facililty/:id											Ta bort en facilitet
+GET		/facililty/:id/partitions								Lista alla rum i en facilitet
+POST	/facililty/:id/partitions								Lägg till ett rum i en facilitet
+DELETE	/facililty/:id/partitions/:id							Ta bort ett rum från en facilitet
+GET		/facililty/:id/prices									Lista alla priser för en facilitet
+POST	/facililty/:id/prices									Lägg till ett pris för en facilitet
+DELETE	/facililty/:id/prices/:id								Ta bort ett pris för en facilitet
+GET		/building												Lista alla byggnader
+GET		/building/:id											Hämta info om byggnader
+POST	/building												Skapa ny byggnad
+PUT		/building/:id											Uppdatera byggnad
+DELETE	/building/:id											Ta bort byggnad
+GET		/building/:id/facililties								Lista alla byggnader på en anläggning
+POST	/building/:id/facililties								Lägg till byggnad på en anläggning
+DELETE	/building/:id/facililties/:id							Ta bort en byggnad från en anläggning
+GET		/site													Lista alla anläggningar
+GET		/site/:id												Hämta info om en anläggning
+POST	/site													Skapa ny anläggning
+PUT		/site/:id												Uppdatera en anläggning
+DELETE	/site/:id												Ta bort en anläggning
+GET		/site/:id/facililties									Lista alla faciliteter på en anläggning
+POST	/site/:id/facililties									Lägg till facilitet på en anläggning
+DELETE	/site/:id/facililties/:id								Ta bort en facilitet från en anläggning
+GET		/site/:id/cards											Lista alla styrkort på en anläggning
+PUT		/site/:id/cards											Lägg till styrkort på en anläggning
+DELETE	/site/:id/cards/:id										Ta bort ett styrkort från en anläggning
+GET		/customer												Lista alla kunder
+GET		/customer/:id											Hämta info om en kund
+POST	/customer												Skapa ny kund
+PUT		/customer/:id											Uppdatera kund
+DELETE	/customer/:id											Ta bort en kund
+GET		/customer/search/:string								Sök blandkunder
+GET		/customer/from/:start/to/:stop							Lista ett givet antal kunder
+GET		/category												Lista alla kundkategorier
+GET		/category/:id											Hämta info om en kundkategori
+POST	/category												Skapa en ny kundkategori
+PUT		/category/:id											Uppdatera en kundkategori
+DELETE	/category/:id											Ta bort en kundkategori
+GET		/server													Lista alla låsservrar
+GET		/server/:id												Hämta info om en låsserver
+POST	/server													Skapa en ny låsserver
+PUT		/server/:id												Uppdatera en låsserver
+DELETE	/server/:id												Ta bort en låsserver
+GET		/reservation											Lista alla bokningar
+GET		/reservation/:id										Hämta info om en bokning
+POST	/reservation											Skapa ny bokning
+PUT		/reservation/:id										Uppdatera bokning
+DELETE	/reservation/:id										Ta bort en bokning
+GET		/reservation/:id/facilities								Lista alla faciliteter i en bokning
+POST	/reservation/:id/facilities								Lägg till en facilitet till en bokning
+DELETE	/reservation/:id/facilities/:id							Ta bort en facilitet från en bokning
+GET		/reservation/search/from/:date/to/:date					Hitta alla bokningar mellan två datum
+GET		/reservation/search/by/:customer						Hitta alla bokningar av en kund
+GET		/reservation/search/from/:date/to/:date/by/:customer	Hitta alla bokningar av en kund mellan två datum

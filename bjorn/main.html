@@ -1,0 +1,124 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Strict//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Södra Skånes bokningssystem</title>
+<link rel="stylesheet" type="text/css" href="resources/stylesheets/main.css" />
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
+<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+<script>
+	$(document).ready(function() {
+		$( "a.button" ).button({
+	    	  icons: {
+	    		  primary: "ui-icon-key"
+	    	  }
+	    });
+		
+		$( "#accordion" ).accordion();
+	});
+</script>
+</head>
+<body>
+<div id="header">
+  <div id="logo"><span>[Logotyp]</span></div>
+  <span>Södra Skånes lås- och bokningssystem</span>
+</div>
+<div id="canvas">
+  <div id="content-header">
+    <div id="title">Välkommen, <span id="name">[namn]</span></div>
+    <div id="navigation-space"><a href="" class="button">Logga ut</a></div>
+  </div>
+  <div id="content-body">
+    <div id="accordion">
+      <h3>Systemet</h3>
+      <div>
+        <p><a href="main.html">Startsidan</a></p>
+        <p><a href="main.html">Bokningsvyn</a></p>
+        <p><a href="main.html">Logga ut</a></p>
+      </div>
+      <h3>Användare och behörigheter</h3>
+      <div>
+        <p><a href="list_users.html">Användare</a></p>
+        <p><a href="list_privileges.html">Behörigheter</a></p>
+      </div>
+      <h3>Anläggningar</h3>
+      <div>
+        <p><a href="">Anläggning</a></p>
+        <p><a href="">Priser</a></p>
+      </div>
+      <h3>Kunder</h3>
+      <div>
+        <p><a href="">Kunder</a></p>
+        <p><a href="">Kundtyper</a></p>
+      </div>
+      <h3>Lås och tillträde</h3>
+      <div>
+        <p><a href="">Lägg till användare</a></p>
+        <p><a href="">Hantera användare</a></p>
+        <p><a href="">Hantera behörigheter</a></p>
+      </div>
+    </div>
+  </div>
+  <div id="content">
+    <div class="content-box" id="category-system">
+      <div class="content-box-logo"><span>Systemet</span></div>
+      <div class="content-box-description">
+        <h3><a href="main.html">Systemet</a></h3>
+        Här hittar du länkar till systemets olika gränssnitt och en massa annat.
+      </div>
+      <ul>
+        <li><a href="main.html">Startsidan</a></li>
+        <li><a href="main.html">Bokningsvyn</a></li>
+        <li><a href="main.html">Logga ut</a></li>
+      </ul>
+    </div>
+    <div class="content-box" id="category-users">
+      <div class="content-box-logo"><span>Användare</span></div>
+      <div class="content-box-description">
+        <h3><a href="users.html">Användare och behörigheter</a></h3>
+        Här hanterar du lås- och bokningssystemets användare och deras behörigheter.
+      </div>
+      <ul>
+        <li><a href="list_users.html">Användare</a></li>
+        <li><a href="list_privileges.html">Behörigheter</a></li>
+      </ul>
+    </div>
+    <div class="content-box" id="category-compounds">
+      <div class="content-box-logo"><span>Anläggningar</span></div>
+      <div class="content-box-description">
+        <h3><a href="">Anläggningar</a></h3>
+        Här hanterar du anläggningar. Du kan exempelvis sätta priser för uthyrning, beskriva vad som kan hyras ut och annat. 
+      </div>
+      <ul>
+        <li><a href="">Anläggningar</a></li>
+        <li><a href="">Priser</a></li>
+      </ul>
+    </div>
+    <div class="content-box" id="category-customers">
+      <div class="content-box-logo"><span>Kunder</span></div>
+      <div class="content-box-description">
+        <h3><a href="">Kunder</a></h3>
+        Här hanterar du kunder och kundtyper. Kundregistret är det samma som syns i bokningsgränssnittet.
+      </div>
+      <ul>
+        <li><a href="">Kunder</a></li>
+        <li><a href="">Kundtyper</a></li>
+      </ul>
+    </div>
+    <div class="content-box" id="category-locks">
+      <div class="content-box-logo"><span>Lås</span></div>
+      <div class="content-box-description">
+        <h3><a href="">Lås och tillträde</a></h3>
+        Här hanterar du låsen på anläggningarna.
+      </div>
+      <ul>
+        <li><a href="">Lägg till användare</a></li>
+        <li><a href="">Hantera användare</a></li>
+        <li><a href="">Hantera behörigheter</a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+</body>
+</html>

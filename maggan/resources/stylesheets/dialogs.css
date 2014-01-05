@@ -1,0 +1,110 @@
+@CHARSET "UTF-8";
+
+.mandatory {
+	color: red;
+}
+
+.no-close .ui-dialog-titlebar-close {
+  display: none;
+}
+
+.ui-dialog {
+	border: 1px solid #777;
+	background-color: #fff;
+	display: none;
+}
+
+.ui-dialog-titlebar {
+	background-color: #ddd;
+	border-bottom: 1px solid #777;
+}
+
+.ui-widget-overlay {
+	background: url("http://code.jquery.com/ui/1.10.3/themes/smoothness/images/ui-bg_flat_0_aaaaaa_40x100.png") 50% 50% repeat-x #AAAAAA;
+	opacity: 0.3;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+}
+
+.ui-front {
+	z-index: 100;
+}
+
+/* Stilmall för åtkomstdialogen */
+#admission-dialog {
+	text-align: left;
+}
+
+#admission-dialog .dynatree-container {
+	border: none;
+	padding: 0px;
+}
+
+/* Stilmall för bokningsdialogen */
+#booking-dialog {
+	font-size: 10px;
+	text-align: left;
+}
+
+#booking-dialog fieldset {
+	display: inline-block;
+	border: none;
+}
+
+#booking-dialog fieldset br {
+	clear: both;
+}
+
+#booking-dialog fieldset#booking-left-pane {
+	float: left
+}
+
+#booking-dialog fieldset#booking-left-pane label {
+	float: left;
+}
+
+#booking-dialog fieldset#booking-left-pane input,
+#booking-dialog fieldset#booking-left-pane select,
+#booking-dialog fieldset#booking-left-pane textarea {
+	float: right;
+	margin-left: 10px;
+	width: 120px;
+}
+
+#booking-dialog fieldset#booking-right-pane {
+	float: right;
+	text-align: left;
+}
+
+#booking-dialog ul.auto-complete-list {
+	z-index: 1500;
+}
+
+/* Stilmall för kunddialogen */
+#customer-dialog fieldset {
+	border: none;
+}
+
+#customer-dialog fieldset br {
+	clear: both;
+}
+
+#customer-dialog label {
+	float: left;
+}
+
+#customer-dialog input,
+#customer-dialog textarea {
+	float: right;
+	margin-left: 10px;
+	width: 150px;
+}
+
+/* Stilmall för borttagningsdialogerna */
+
+#confirm-dialog {
+	text-align: left;
+}

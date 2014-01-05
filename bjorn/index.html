@@ -1,0 +1,45 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Strict//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Södra Skånes bokningssystem</title>
+<link rel="stylesheet" type="text/css" href="resources/stylesheets/main.css" />
+<link rel="stylesheet" type="text/css" href="resources/stylesheets/login.css" />
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
+<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+<script>
+	$(document).ready(function() {
+		$( "a.button" ).button({
+	    	  icons: {
+	    		  primary: "ui-icon-key"
+	    	  }
+		});
+
+		$( "#submit-button" ).click(function() {
+			$('#loginform').submit();
+		});
+			
+		$( "#accordion" ).accordion();
+	});
+</script>
+</head>
+<body>
+<div id="header">
+  <div id="logo"><span>[Logotyp]</span></div>
+  <span>Södra Skånes lås- och bokningssystem</span>
+</div>
+<div id="canvas">
+  <div id="content-header">
+    <div id="title"></div>
+  </div>
+  <div id="content-body">
+    <form id="loginform" name="loginform" action="main.html" method="post">
+      <span class="label">E-postadress</span><input type="textfield" id="email" name="email" /><br />
+      <span class="label">Lösenord</span><input type="password" id="password" name="password" /><br />
+      <a href="#" class="button" id="submit-button">Logga in</a>
+    </form>
+  </div>
+</div>
+</body>
+</html>

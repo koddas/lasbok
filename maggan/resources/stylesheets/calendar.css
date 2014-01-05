@@ -1,0 +1,20 @@
+@CHARSET "UTF-8";
+
+#calendar {
+	float: right;
+	margin: 0 auto;
+	width: 630px;
+}
+
+#month-picker .hasDatepicker {
+	width: 150px;
+}
+
+.ui-datepicker-inline.ui-datepicker.ui-widget.ui-widget-content.ui-helper-clearfix.ui-corner-all {
+	font-size: 11px;
+	width: 150px;
+}
+
+.ui-datepicker-inline.ui-datepicker.ui-widget.ui-widget-content.ui-helper-clearfix.ui-corner-all select {
+	font-size: 10px;
+}

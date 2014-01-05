@@ -1,0 +1,18 @@
+/* Stilmallar för formulär */
+
+#loginform {
+	border: 1px solid grey;
+	border-radius: 4px;
+	display: inline-block;
+	margin-left: 200px;
+	padding: 10px;
+	text-align: right;
+}
+
+#loginform input {
+	margin-bottom: 5px;
+}
+
+#loginform a.button {
+	margin-top: 10px;
+}

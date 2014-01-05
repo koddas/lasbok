@@ -1,0 +1,350 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Strict//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Södra Skånes bokningssystem</title>
+<link rel="stylesheet" style="text/css" href="resources/stylesheets/main.css" />
+<link rel="stylesheet" type="text/css" href="resources/stylesheets/dialogs.css" />
+<link rel="stylesheet" type="text/css" href="resources/stylesheets/footable.css" />
+<link rel="stylesheet" type="text/css" href="resources/javascript/dynatree-1.2.4/src/skin/ui.dynatree.css" />
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
+<link href="resources/javascript/footable/css/footable.sortable-0.1.css" rel="stylesheet" type="text/css" />
+<link href="resources/javascript/footable/css/footable.paginate.css" rel="stylesheet" type="text/css" />
+<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+<script src="resources/javascript/footable/js/footable.js" type="text/javascript"></script>
+<script src="resources/javascript/footable/js/footable.sortable.js" type="text/javascript"></script>
+<script src="resources/javascript/footable/js/footable.paginate.js" type="text/javascript"></script>
+<script src="resources/javascript/dynatree-1.2.4/dist/jquery.dynatree.min.js"></script>
+<script type="text/javascript">
+	$(document).ready(function() {
+		var customers = [
+		    	"Jonas Hägg",
+		    	"Månstorps scoutkår",
+		    	"Trelleborgs kommun",
+		    	"Tomelilla kommun",
+		    	"Nils Levin",
+		    	"Södra Skånes scoutdistrikt"
+		    ];
+		
+        $('table').footable();		
+		$( "#end_date" ).datepicker();
+		
+		$( "a.button" )
+	      .button();
+		
+		$( "#navigation-space a.button" )
+	      .button({
+	    	  icons: {
+	    		  primary: "ui-icon-circle-triangle-w"
+	    	  }
+	      });
+		
+        // Attach the dynatree widget to an existing <div id="tree"> element
+        // and pass the tree options as an argument to the dynatree() function:
+        $( "#admission-fieldset" ).dynatree({
+            persist: false,
+            checkbox: true,
+            selectMode: 3,
+            children: [ // Pass an array of nodes.
+                {title: "Stora huset",
+            		children: [
+						{title: "Köket"},
+						{title: "Stora salen"},
+						{title: "Intendenturen"},
+						{title: "Lilla köket"}
+            		]
+                },
+                {title: "Lilla huset",
+                    children: [
+                        {title: "Sovrummet"},
+                        {title: "Kontoret"},
+                        {title: "Programexpeditionen"}
+                    ]
+                },
+                {title: "Klövern",
+                    children: [
+                        {title: "Höger sovrum"},
+                        {title: "Vänster sovrum"},
+                        {title: "Lotsrummet"}
+                    ]
+                },
+                {title: "Patrullstugorna",
+                    children: [
+                        {title: "Högra stugan"},
+                        {title: "Vänstra stugan"}
+                    ]
+                }
+            ]
+        });
+		
+		$( "#customer" ).autocomplete({
+		  appendTo: "#booking-dialog",
+		  source: customers
+		});
+    });
+	
+	function mockObject(title) {
+		var obj = new Object();
+		obj.title = title;
+		
+		return obj;
+	}
+    
+    function confirmRemoval(booking, dialog) {        
+        $( "#confirm-dialog" ).dialog({
+            resizable: false,
+            modal: true,
+            dialogClass: "no-close",
+            width: 350,
+            buttons: {
+              "Ja, ta bort bokning": function() {
+                alert("Tar bort bokning " + booking);
+                $( this ).dialog( "close" );
+                $( dialog ).dialog( "close" );
+              },
+              "Nej, behåll bokning": function() {
+                $( this ).dialog( "close" );
+              }
+            }
+        });
+    }
+
+    function alterBooking(booking) {
+    	$( "#booking-dialog" ).dialog({
+            resizable: false,
+            modal: true,
+            dialogClass: "no-close",
+            width: 420,
+            buttons: {
+              "Gör ändring": function() {
+                alert("Spara ändringen");
+            	$( this ).dialog( "close" );
+              },
+              "Avbryt ändring": function() {
+                  $( this ).dialog( "close" );
+              },
+              "Ta bort bokning": function() {
+                  confirmRemoval(booking.title, "#booking-dialog");
+              }
+            }
+        });
+    }
+
+    function setAdmissions() {
+    	$( "#admission-dialog" ).dialog({
+            resizable: false,
+            modal: true,
+            dialogClass: "no-close",
+            buttons: {
+              "Spara tillträde": function() {
+                $( this ).dialog( "close" );
+              }
+            }
+        });
+    }
+    
+    function setCustomerData() {
+    	$( "#customer-dialog" ).dialog({
+            resizable: false,
+            modal: true,
+            dialogClass: "no-close",
+            width: 350,
+            buttons: {
+                "Använd uppgifter": function() {
+                    $( this ).dialog( "close" );
+                },
+                "Kasta uppgifter": function() {
+                    $( this ).dialog( "close" );
+                }
+            }
+        });
+    }
+</script>
+</head>
+<body>
+<div id="header">
+  <div id="logo"><span>[Logotyp]</span></div>
+  <span>Södra Skånes bokningssystem</span>
+</div>
+<div id="content">
+  <div id="content-header">
+    <div id="title">Redan lagda bokningar</div>
+    <div id="navigation-space">
+      <a href="main.html" class="button"><span>Tillbaka till startsida</span></a>
+    </div>
+  </div>
+  <div id="content-body">
+    <div id="sidebar">
+      <a href="view_bookings_calendar.html"><span>Visa kalender</span></a>
+    </div>
+    <div id="bookings-list-pane">
+      <table id='bookings-list' class="footable" data-page-size="5" frame='border' rules='all'>
+	    <thead>
+	      <tr>
+	        <th data-sort-initial='true' data-type="numeric">
+	          Datum
+	        </th>
+	        <th>
+	          Hyresgäst
+	        </th>
+	        <th>
+	          Aktivitet
+	        </th>
+		    <th>
+		      Kundtyp
+		    </th>
+		    <th data-sort-ignore="true">&nbsp;</th>
+		    <th data-sort-ignore="true">&nbsp;</th>
+	      </tr>
+	    </thead>
+	    <tbody>
+<!-- Fejkad data -->
+	      <tr>
+	        <td data-value="1">2 april 2013</td>
+	        <td>Lars-Ingmar Olsson</td>
+	        <td>KO-träff</td>
+	        <td>Intern</td>
+	        <td><a href="javascript:void(null);" onclick="alterBooking(mockObject('KO-träff'))">Förändra</a></td>
+	        <td><a href="javascript:void(null);" onclick="confirmRemoval('KO-träff');">Ta bort</a></td>
+	      </tr>
+	      <tr>
+	        <td data-value="2">2 maj 2013</td>
+	        <td>Hacke</td>
+	        <td>Brandkoll</td>
+	        <td>Intern</td>
+	        <td><a href="javascript:void(null);" onclick="alterBooking(mockObject('Brandkoll'))">Förändra</a></td>
+	        <td><a href="javascript:void(null);" onclick="confirmRemoval('Brandkoll');">Ta bort</a></td>
+	      </tr>
+	      <tr>
+	        <td data-value="3">6 - 8 maj 2013</td>
+	        <td>Johan Holmberg</td>
+	        <td>Lägerskola</td>
+	        <td>Intern</td>
+	        <td><a href="javascript:void(null);" onclick="alterBooking(mockObject('Lägerskola'))">Förändra</a></td>
+	        <td><a href="javascript:void(null);" onclick="confirmRemoval('Lägerskola');">Ta bort</a></td>
+	      </tr>
+	      <tr>
+	        <td data-value="4">10 - 11 maj 2013</td>
+	        <td>Jonas Hägg</td>
+	        <td>Privatbokning</td>
+	        <td>Extern</td>
+	        <td><a href="javascript:void(null);" onclick="alterBooking(mockObject('Privatbokning'))">Förändra</a></td>
+	        <td><a href="javascript:void(null);" onclick="confirmRemoval('Privatbokning');">Ta bort</a></td>
+	      </tr>
+	      <tr>
+	        <td data-value="5">17 maj 2013</td>
+	        <td>Patrik Sjöstrand</td>
+	        <td>Scout 3D</td>
+	        <td>Intern</td>
+	        <td><a href="javascript:void(null);" onclick="alterBooking(mockObject('Scout 3D'))">Förändra</a></td>
+	        <td><a href="javascript:void(null);" onclick="confirmRemoval('Scout 3D');">Ta bort</a></td>
+	      </tr>
+	      <tr>
+	        <td data-value="6">22 - 24 maj 2013</td>
+	        <td>Johan Holmberg</td>
+	        <td>Lägerskola</td>
+	        <td>Intern</td>
+	        <td><a href="javascript:void(null);" onclick="alterBooking(mockObject('Lägerskola'))">Förändra</a></td>
+	        <td><a href="javascript:void(null);" onclick="confirmRemoval('Lägerskola');">Ta bort</a></td>
+	      </tr>
+	      <tr>
+	        <td data-value="7">24 - 26 maj 2013</td>
+	        <td>Ulf Luvö</td>
+	        <td>LOTS-helg</td>
+	        <td>Intern</td>
+	        <td><a href="javascript:void(null);" onclick="alterBooking(mockObject('LOTS-helg'))">Förändra</a></td>
+	        <td><a href="javascript:void(null);" onclick="confirmRemoval('LOTS-helg');">Ta bort</a></td>
+	      </tr>
+	      <tr>
+	        <td data-value="8">27 juli - 4 augusti</td>
+	        <td>Stefan Olsson</td>
+	        <td>Distriktsläger</td>
+	        <td>Intern</td>
+	        <td><a href="javascript:void(null);" onclick="alterBooking(mockObject('Distriktsläger'))">Förändra</a></td>
+	        <td><a href="javascript:void(null);" onclick="confirmRemoval('Distriktsläger');">Ta bort</a></td>
+	      </tr>
+	      <tr>
+	        <td data-value="9">2 augusti 2013</td>
+	        <td>Patrik Redgård</td>
+	        <td>Pappersdag</td>
+	        <td>Intern</td>
+	        <td><a href="javascript:void(null);" onclick="alterBooking(mockObject('Pappersdag'))">Förändra</a></td>
+	        <td><a href="javascript:void(null);" onclick="confirmRemoval('Pappersdag');">Ta bort</a></td>
+	      </tr>
+<!-- Slut på fejkad data -->
+	    </tbody>
+	  </table>
+      <div id="bookings-navigation">
+        <ul id="pagination" class="footable-nav"><span>Sidor:</span></ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Här nedanför kommer dialogrutor -->
+
+<div id="confirm-dialog" title="Ta bort bokning?" class="ui-dialog">
+  <p>
+    <span class="ui-icon ui-icon-alert" style="float: left; margin: 0 7px 20px 0;"></span>
+    Du håller på att ta bort en bokning. När du tagit bort den kan du inte ångra dig. Är du säker på att du vill ta bort den?
+  </p>
+</div>
+
+<div id="booking-dialog" title="Ändra eller ta bort bokning" class="ui-dialog">
+  <form>
+    <fieldset id="booking-left-pane">
+      <label for="event" class="mandatory">Vad</label>
+      <input type="text" name="event" id="event" class="text ui-widget-content ui-corner-all" value="Privatbokning" /><br />
+      <label for="customer" class="mandatory">Hyresgäst</label>
+      <input type="text" name="customer" id="customer" class="text ui-widget-content ui-corner-all" value="Jonas Hägg" /><br />
+      <select name="customer_category" id="customer_category">
+        <option>Intern hyregäst</option>
+        <option selected="selected">Extern hyregäst</option>
+      </select><br />
+      <label for="end_date">Slutdatum</label>
+      <input type="text" name="end_date" id="end_date" class="text ui-widget-content ui-corner-all" value="2013-05-03" /><br />
+      <label for="nbr_of_guests">Personantal</label>
+      <input type="text" name="nbr_of_guests" id="nbr_of_guests" class="text ui-widget-content ui-corner-all" value="53" /><br />
+      <label for="comments" class="mandatory">Extra</label>
+      <textarea name="comments" id="comments" class="text ui-widget-content ui-corner-all">Jonas tar med sig egen mat, kylen måste vara igång.</textarea>
+    </fieldset>
+    <fieldset id="booking-right-pane">
+      <a href="javascript:void(null);" onclick="setAdmissions();">Ange tillträde</a><br />
+      <a href="javascript:void(null);" onclick="setCustomerData();">Ange kontaktuppgifter</a><br />
+      <br />
+      <input type="checkbox" name="preliminary" id="preliminary" class="text ui-widget-content ui-corner-all" checked="checked" />
+      <label for="preliminary">bokningen är preliminär</label><br />
+      <input type="checkbox" name="verified" id="verified" class="text ui-widget-content ui-corner-all" />
+      <label for="verified">bokningen är bekräftad</label><br />
+      <br />
+      <a href="javascript:void(null);">Generera bokningsbekräftelse</a><br />
+    </fieldset>
+  </form>
+</div>
+
+<div id="admission-dialog" title="Ange tillträde" class="ui-dialog">
+  <form>
+    <div id="admission-fieldset"></div>
+  </form>
+</div>
+
+<div id="customer-dialog" title="Ange kontaktuppgifter" class="ui-dialog">
+  <form>
+    <fieldset>
+      <label for="contact_person">Kontaktperson</label>
+      <input type="text" name="contact_person" id="contact_person" class="text ui-widget-content ui-corner-all" /><br />
+      <label for="phone" class="mandatory">Telefonnummer</label>
+      <input type="text" name="phone" id="phone" class="text ui-widget-content ui-corner-all" value="0414-500 66" /><br />
+      <label for="email" class="mandatory">E-postadress</label>
+      <input type="text" name="email" id="email" class="text ui-widget-content ui-corner-all" value="jonas.hagg@nara.ica.se" /><br />
+      <label for="address" class="mandatory">Postadress</label>
+      <textarea name="address" id="address" class="text ui-widget-content ui-corner-all">Järnvägsgatan 4
+      272 61 Gärsnäs</textarea><br />
+      <label for="invoicing_address">Faktureringsadress</label>
+      <textarea name="invoicing_address" id="invoicing_address" class="text ui-widget-content ui-corner-all"></textarea>
+    </fieldset>
+  </form>
+</div>
+</body>
+</html>
