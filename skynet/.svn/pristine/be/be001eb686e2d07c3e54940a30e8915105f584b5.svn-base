@@ -1,0 +1,33 @@
+package se.sjorod.lasbok.skynet;
+
+import org.joda.time.DateTime;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+public class CallDispatcher {
+	private DoorLocker locker;
+	private Logger logger;
+	
+	public CallDispatcher() {
+		locker = DoorLocker.getInstance();
+		logger = LoggerFactory.getLogger(CallDispatcher.class);
+	}
+	
+	public void dispatch(Command command) {
+		switch (command.getCommand()) {
+		case Command.LOCK_ALL:
+			break;
+		case Command.UNLOCK_ALL:
+			break;
+		case Command.LOCK:
+			break;
+		case Command.UNLOCK:
+			break;
+		case Command.UPDATE_SCHEDULE:
+			break;
+		default:
+			logger.error("Unknown command " + command.toString() + " at " +
+						(new DateTime()).toString());
+		}
+	}
+}
