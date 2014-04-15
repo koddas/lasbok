@@ -74,9 +74,9 @@ $app->put('/user/:id', function ($id) use ($app, $db) {
 	$last_name_part = '';
 	if (strlen($last_name) > 0) {
 		if ($comma_needed) {
-			$first_name_part = ',';
+			$last_name_part = ',';
 		}
-		" last_name = '$last_name'";
+		$last_name_part += " last_name = '$last_name'";
 	}
 	
 	$db->query("UPDATE Users SET"
