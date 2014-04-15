@@ -24,7 +24,7 @@ $app->post('/user', function () use ($app, $db) {
 	$first_name = $app->request->post('first_name');
 	$last_name = $app->request->post('last_name');
 	
-	if (!(strlen($username) > 0 && strlen($password) &&
+	if (!(strlen($username) > 0 && strlen($password) > 0 &&
 		  strlen($first_name) > 0 && strlen($last_name) > 0)) {
 		$app->halt(400, 'Bad request');
 	}
@@ -96,6 +96,8 @@ $app->put('/user/:id', function ($id) use ($app, $db) {
 $app->delete('/user/:id', function ($id) use ($app, $db) {
 	// TODO: Kontrollera om användaren har behörighet att ta bort användare
 	$db->delete('Users', array('user_name' => $id));
+	
+	$app->response()->status(200);
 });
 
 $app->get('/user/:id/roles', function ($id) use ($app, $db) {
@@ -146,5 +148,7 @@ $app->delete('/user/:id/roles/:rid', function ($id, $rid) use ($app, $db) {
 								   'User_roles_id' => $rid));
 	
 	$db->delete('User_has_User_roles', $values);
+	
+	$app->response()->status(200);
 });
 ?>
