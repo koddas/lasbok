@@ -8,7 +8,8 @@ $app->get('/building', function () use ($app, $db) {
 $app->get('/building/:id', function ($id) use ($app, $db) {
 	if (intval($id) < 1) {
 		$app->halt(400, 'Bad request');
-}
+	}
+	
 	$cols = array('id', 'name', 'description', 'sites_id');
 	$where = array('id' => $id);
 	$buildings = $db->select('Buildings', $cols, $where);
@@ -21,21 +22,22 @@ $app->get('/building/:id', function ($id) use ($app, $db) {
 
 $app->post('/building', function () use ($app, $db) {
 	// TODO: Kontrollera om användaren har behörighet att skapa byggnad
-	if (intval($id) < 1) {
-		$app->halt(400, 'Bad request');
-	}
 	
-	$id = $app->request->post('id');
 	$name = $app->request->post('name');
 	$description = $app->request->post('description');
-	$sites_id = $app->request->post('sites_id');
+	$site = $app->request->post('site');
 	
-	if (!(strlen($id) > 0 && strlen($name) > 0 &&
-			strlen($description) > 0 && strlen($sites_id) > 0)) {
+	if (!(strlen($name) > 0 && strlen($description) > 0 &&
+			intval($site) > 0)) {
 		$app->halt(400, 'Bad request');
 	}
 	
-	$db->query("INSERT INTO Buildings VALUES ('$id', '$name', '$description', '$sites_id');");
+	$db->query("INSERT INTO Buildings VALUES (null, '$name', '$description', '$site');");
+	$values = array('name' => $name,
+			'description' => $description,
+			'sites_id' => $site);
+	
+	$db->insert('Buildings', $values);
 	
 	$errors = $db->error();
 	
@@ -60,15 +62,15 @@ $app->put('/building/:id', function ($id) use ($app, $db) {
 	$id = $app->request->post('id');
 	$name = $app->request->post('name');
 	$description = $app->request->post('description');
-	$sites_id = $app->request->post('sites_id');
+	$site = $app->request->post('site');
 	
-	if (!(strlen($id) > 0 && strlen($name) > 0 &&
-			strlen($description) > 0 && strlen($sites_id) > 0)) {
+	if (!(intval($id) > 0 && strlen($name) > 0 &&
+			strlen($description) > 0 &&  intval($site) > 0)) {
 		$app->halt(400, 'Bad request');
 	}
 	
 	$values = array('id' => $id, 'name' => $name,
-			'description' => $description, 'sites_id' => sites_id);
+			'description' => $description, 'sites_id' => $site);
 	
 	$db->insert('Buildings', $values);
 	
@@ -100,7 +102,8 @@ $app->delete('/building/:id', function ($id) use ($app, $db) {
 $app->get('/building/:id/facilities', function ($id) use ($app, $db) {
 	if (intval($id) < 1) {
 		$app->halt(400, 'Bad request');
-}
+	}
+	
 	$cols = array('id', 'facilities_id');
 	$select = array('Building_has_facilities.Buildings_id' => $id);
 	$join = array('[>]Buildings_has_facilities'=> array('id' => 'Facilities_id'));
