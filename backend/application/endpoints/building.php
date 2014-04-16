@@ -69,10 +69,11 @@ $app->put('/building/:id', function ($id) use ($app, $db) {
 		$app->halt(400, 'Bad request');
 	}
 	
-	$values = array('id' => $id, 'name' => $name,
-			'description' => $description, 'sites_id' => $site);
+	$values = array('name' => $name, 'description' => $description,
+			'sites_id' => $site);
+	$where = array('id' => $id);
 	
-	$db->insert('Buildings', $values);
+	$db->update('Buildings', $values, $where);
 	
 	$errors = $db->error();
 	
