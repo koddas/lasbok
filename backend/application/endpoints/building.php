@@ -32,7 +32,6 @@ $app->post('/building', function () use ($app, $db) {
 		$app->halt(400, 'Bad request');
 	}
 	
-	$db->query("INSERT INTO Buildings VALUES (null, '$name', '$description', '$site');");
 	$values = array('name' => $name,
 			'description' => $description,
 			'sites_id' => $site);
