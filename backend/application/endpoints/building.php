@@ -32,7 +32,6 @@ $app->post('/building', function () use ($app, $db) {
 		$app->halt(400, 'Bad request');
 	}
 	
-	$db->query("INSERT INTO Buildings VALUES (null, '$name', '$description', '$site');");
 	$values = array('name' => $name,
 			'description' => $description,
 			'sites_id' => $site);
@@ -46,7 +45,7 @@ $app->post('/building', function () use ($app, $db) {
 			$app->response()->status(201);
 			break;
 		case 23000:
-			$app->halt(409, "Building '$id' already exists");
+			$app->halt(409, "Building '$name' already exists");
 			break;
 		default:
 			$app->halt(500, $errors[2]);
@@ -69,10 +68,11 @@ $app->put('/building/:id', function ($id) use ($app, $db) {
 		$app->halt(400, 'Bad request');
 	}
 	
-	$values = array('id' => $id, 'name' => $name,
-			'description' => $description, 'sites_id' => $site);
+	$values = array('name' => $name, 'description' => $description,
+			'sites_id' => $site);
+	$where = array('id' => $id);
 	
-	$db->insert('Buildings', $values);
+	$db->update('Buildings', $values, $where);
 	
 	$errors = $db->error();
 	
