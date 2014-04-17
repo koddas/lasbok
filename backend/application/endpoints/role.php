@@ -45,11 +45,12 @@ $app->post('/role', function () use ($app, $db) {
 
 $app->put('/role/:id', function ($id) use ($app, $db) {
 	// TODO: Kontrollera om användaren har behörighet att förändra roller
+	$id = intval(id);
 	
 	$name = $app->request->put('name');
 	$description = $app->request->put('description');
 	
-	if (intval($id) < 1 || strlen($name) < 1 || strlen($description) < 1) {
+	if ($id < 1 || strlen($name) < 1 || strlen($description) < 1) {
 		$app->halt(400, 'Bad request');
 	}
 	
@@ -76,7 +77,9 @@ $app->put('/role/:id', function ($id) use ($app, $db) {
 $app->delete('/role/:id', function ($id) use ($app, $db) {
 	// TODO: Kontrollera om användaren har behörighet att ta bort roller
 	
-	if (intval($id) < 1) {
+	$id = intval(id);
+	
+	if ($id < 1) {
 		$app->halt(400, 'Bad request');
 	}
 	
