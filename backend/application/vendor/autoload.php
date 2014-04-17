@@ -4,4 +4,8 @@
 
 require_once __DIR__ . '/composer' . '/autoload_real.php';
 
+<<<<<<< HEAD
 return ComposerAutoloaderInit1f2f035be43e270412d0c4cb35e74d30::getLoader();
+=======
+return ComposerAutoloaderInitc05b782f927f88280f12ebbb8441935f::getLoader();
+>>>>>>> refs/remotes/origin/feature/Customer_endpoint
