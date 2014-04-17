@@ -42,14 +42,17 @@ $app->post('/category', function () use ($app, $db) {
 
 $app->put('/category/:id', function ($id) use ($app, $db) {
 	// TODO: Kontrollera om användaren har behörighet att ändra categori
-	if (intval($id) < 1) {
+	
+	$id = intval($id);
+	
+	if ($id < 1) {
 		$app->halt(400, 'Bad request');
 	}
 	
 	$id = $app->request->post('id');
 	$description = $app->request->post('description');
 	
-	if (!(strlen($id) > 0 && strlen($description) > 0 )) {
+	if (!($id > 0 && strlen($description) > 0 )) {
 		$app->halt(400, 'Bad request');
 	}
 	
@@ -75,6 +78,16 @@ $app->put('/category/:id', function ($id) use ($app, $db) {
 
 $app->delete('/category/:id', function ($id) use ($app, $db) {
 	// TODO: Kontrollera om användaren har behörighet att ta bort categori
+	
+	$id = intval($id);
+	
+	if ($id < 1) {
+		$app->halt(400, 'Bad request');
+	}
+	
 	$db->delete('Customer_categories', array('id' => $id));
+	
+	$app->response()->status(200);
+	
 });
 ?>
