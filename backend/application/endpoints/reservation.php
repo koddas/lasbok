@@ -9,7 +9,9 @@ $app->get('/reservation', function () use ($app, $db) {
 });
 
 $app->get('/reservation/:id', function ($id) use ($app, $db) {
-	if (intval($id) < 1) {
+	$id =intval($id);
+	
+	if ($id < 1) {
 		$app->halt(400, 'Bad request');
 	}
 	$cols = array('id', 'description', 'start_date', 'end_date',
@@ -41,9 +43,12 @@ $app->post('/reservation', function () use ($app, $db) {
 	$extras = $app->request->post('extras');
 	$start_date = strtotime(start_date);
 	$end_date = strtotime(end_date);
+	$customer_categories_id =intval($customer_categories_id);
+	$customers_id =intval($customers_id);
+	$sites_id =intval($sites_id);
 	
-	if (!(intval($customers_id) > 0 && intval($customer_categries_id) > 0 &&
-			intval($sites_id) > 0 && strlen($site) > 0 &&
+	if (!($customers_id > 0 && $customer_categories_id > 0 &&
+			$sites_id > 0 && strlen($site) > 0 &&
 			$start_date > 0 && $start_date < $end_date)) {
 		$app->halt(400, 'Bad request');
 	}
@@ -89,9 +94,12 @@ $app->put('/reservation/:id', function ($id) use ($app, $db) {
 	$extras = $app->request->post('extras');
 	$start_date = strtotime(start_date);
 	$end_date = strtotime(end_date);
+	$customer_categories_id =intval($customer_categories_id);
+	$customers_id =intval($customers_id);
+	$sites_id =intval($sites_id);
 	
-	if (!(intval($customers_id) > 0 && intval($customer_categries_id) > 0 &&
-			intval($sites_id) > 0 && strlen($site) > 0 &&
+	if (!($customers_id > 0 && $customer_categries_id > 0 &&
+			$sites_id > 0 && strlen($site) > 0 &&
 			$start_date > 0 && $start_date < $end_date)) {
 		$app->halt(400, 'Bad request');
 	}
@@ -126,8 +134,9 @@ $app->put('/reservation/:id', function ($id) use ($app, $db) {
 
 $app->delete('/reservation/:id', function ($id) use ($app, $db) {
 	// TODO: Kontrollera om användaren har behörighet att ta bort reservationer
+	$id = intval($id);
 	
-	if (intval($id) < 1) {
+	if ($id < 1) {
 		$app->halt(400, 'Bad request');
 	}
 	
@@ -147,8 +156,10 @@ $app->get('/reservation/:id/facilities', function ($id) use ($app, $db) {
 $app->post('/reservation/:id/facilities', function ($id) use ($app, $db) {
 	$reservations_id = $app->request->post('Reservations_id');
 	$facility_partitions_id = $app->request->post('Facility_partitions_id');
+	$reservations_id = intval($reservations_id);
+	$facility_partitions_id = intval($facility_partitions_id);
 	
-	if (!(intval($reservations_id) > 0 && intval($facility_partitions_id) > 0)) {
+	if (!($reservations_id > 0 && $facility_partitions_id > 0)) {
 		$app->halt(400, 'Bad request');
 	}
 	
@@ -174,7 +185,10 @@ $app->post('/reservation/:id/facilities', function ($id) use ($app, $db) {
 $app->delete('/reservation/:id/facilities/:fid', function ($id, $fid) use ($app, $db) {
 	// TODO: Kontrollera om användaren har behörighet att ta bort fasiliteter från reservationer
 	
-	if (intval($reservatins_id) < 1 && intval(facility_partitions_id) < 1) {
+	$reservations_id = intval($reservations_id);
+	$facility_partitions_id = intval($facility_partitions_id);
+	
+	if ($reservatins_id < 1 && facility_partitions_id < 1) {
 		$app->halt(400, 'Bad request');
 	}
 	
@@ -187,7 +201,9 @@ $app->delete('/reservation/:id/facilities/:fid', function ($id, $fid) use ($app,
 });
 
 $app->get('/reservation/search/by/:customer', function ($customer) use ($app, $db) {
-	if (intval($id) < 1) {
+	$id = intval($id);
+	
+	if ($id < 1) {
 		$app->halt(400, 'Bad request');
 	}
 	$cols = array('id', 'Customers_id');
@@ -221,6 +237,8 @@ $app->get('/reservation/search/from/:start/to/:stop', function ($start, $stop) u
 
 $app->get('/reservation/search/from/:start/to/:stop/by/:customer',
 		  function ($start, $stop, $customer) use ($app, $db) {
+	$id = intval($id);
+	
 	$cols = array('start_date', 'end_date', 'Customers_id',
 		'description', 'Customer_categories_id');
 		  	
