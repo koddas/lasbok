@@ -12,6 +12,7 @@ $app->get('/customer/:id', function ($id) use ($app, $db) {
 			'postal_address', 'invoicing_address', 'comments');
 	$where = array('id' => $id);
 	$customer = $db->select('Customers', $cols, $where);
+	
 	if (count($customer) > 0) {
 		echo json_encode($users[0], JSON_FORCE_OBJECT | JSON_UNESCAPED_UNICODE);
 	} else {
@@ -21,6 +22,7 @@ $app->get('/customer/:id', function ($id) use ($app, $db) {
 
 $app->post('/customer', function () use ($app, $db) {
 	// TODO: Kontrollera om användaren har behörighet att skapa kund
+	
 	$id = $app->request->post('id');
 	$name = $app->request->post('name');
 	$contact_name = $app->request->post('contact_name');
@@ -60,10 +62,8 @@ $app->post('/customer', function () use ($app, $db) {
 
 $app->get('/customer/:id', function ($id) use ($app, $db) {
 	// TODO: Kontrollera om användaren har behörighet att ändra kund
-	if (intval($id) < 1) {
-		$app->halt(400, 'Bad request');
-	}
 	
+	$id =intval($id);
 	$id = $app->request->post('id');
 	$name = $app->request->post('name');
 	$contact_name = $app->request->post('contact_name');
@@ -73,7 +73,7 @@ $app->get('/customer/:id', function ($id) use ($app, $db) {
 	$invoicing_address = $app->request->post('invoicing_address');
 	$comments = $app->request->post('comments');
 	
-	if (!(intval($id) > 0 && strlen($name) > 0 &&
+	if (!($id > 0 && strlen($name) > 0 &&
 			strlen($contact_name) > 0 &&  strlen($phone_number) > 0 &&
 			strlen($email) > 0 && strlen($postal_address) > 0 )) {
 		$app->halt(400, 'Bad request');
@@ -104,7 +104,10 @@ $app->get('/customer/:id', function ($id) use ($app, $db) {
 
 $app->delete('/customer/:id', function ($id) use ($app, $db) {
 	// TODO: Kontrollera om användaren har behörighet att ta bort kund
-	if (intval($id) < 1) {
+	
+	$id =intval($id);
+	
+	if ($id < 1) {
 		$app->halt(400, 'Bad request');
 	}
 	
