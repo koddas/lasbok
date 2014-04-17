@@ -139,7 +139,7 @@ $app->get('/customer/from/:start/to/:stop', function ($start, $stop) use ($app, 
 	
 	$customer = $db->select('Custmers', $cols, $where);
 	if (count($customer) > 0) {
-		echo json_encode($users[0], JSON_FORCE_OBJECT | JSON_UNESCAPED_UNICODE);
+		echo json_encode($customer[0], JSON_FORCE_OBJECT | JSON_UNESCAPED_UNICODE);
 	} else {
 		$app->halt(404, 'Customer not found');
 	}

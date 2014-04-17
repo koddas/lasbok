@@ -108,9 +108,9 @@ $app->get('/building/:id/facilities', function ($id) use ($app, $db) {
 	$select = array('Building_has_facilities.Buildings_id' => $id);
 	$join = array('[>]Buildings_has_facilities'=> array('id' => 'Facilities_id'));
 
-	$roles = $db->select('Buildings', $join, $cols, $select);
+	$building = $db->select('Buildings', $join, $cols, $select);
 	
-	echo json_encode($roles, JSON_FORCE_OBJECT | JSON_UNESCAPED_UNICODE);
+	echo json_encode($building, JSON_FORCE_OBJECT | JSON_UNESCAPED_UNICODE);
 });
 
 $app->post('/building/:id/facilities', function ($id) use ($app, $db) {
