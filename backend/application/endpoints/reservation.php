@@ -190,12 +190,36 @@ $app->get('/reservation/search/by/:customer', function ($customer) use ($app, $d
 });
 
 $app->get('/reservation/search/from/:start/to/:stop', function ($start, $stop) use ($app, $db) {
+	$cols = array('start_date', 'end_date', 'Customers_id',
+			'description', 'Customer_categories_id');
 	
-	echo "Reservation from to get: $start, $stop";
+	$where = array(
+			'LIMIT' => array($start, $stop));
+	
+	$reservation = $db->select('Reservations', $cols, $where);
+	
+	if (count($reservation) > 0) {
+		echo json_encode($reservation[0], JSON_FORCE_OBJECT | JSON_UNESCAPED_UNICODE);
+	} else {
+		$app->halt(404, 'Customer not found');
+	}
 });
 
 $app->get('/reservation/search/from/:start/to/:stop/by/:customer',
 		  function ($start, $stop, $customer) use ($app, $db) {
+	$cols = array('start_date', 'end_date', 'Customers_id',
+		'description', 'Customer_categories_id');
+		  	
+	$where = array($id,
+		'LIMIT' => array($start, $stop));
+		  	
+	$reservation = $db->select('Reservations', $cols, $where);
+		  	
+	if (count($reservation) > 0) {
+		echo json_encode($reservation[0], JSON_FORCE_OBJECT | JSON_UNESCAPED_UNICODE);
+	} else {
+		$app->halt(404, 'Customer not found');
+	}	
 	echo "Reservation from to get: $start, $stop, $customer";
 });
 ?>
