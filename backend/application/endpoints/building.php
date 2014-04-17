@@ -6,7 +6,9 @@ $app->get('/building', function () use ($app, $db) {
 });
 
 $app->get('/building/:id', function ($id) use ($app, $db) {
-	if (intval($id) < 1) {
+	$id = intval($id);
+	
+	if ($id < 1) {
 		$app->halt(400, 'Bad request');
 	}
 	
@@ -25,10 +27,10 @@ $app->post('/building', function () use ($app, $db) {
 	
 	$name = $app->request->post('name');
 	$description = $app->request->post('description');
-	$site = $app->request->post('site');
+	$site = intval($app->request->post('site'));
 	
 	if (!(strlen($name) > 0 && strlen($description) > 0 &&
-			intval($site) > 0)) {
+			$site > 0)) {
 		$app->halt(400, 'Bad request');
 	}
 	
@@ -54,17 +56,14 @@ $app->post('/building', function () use ($app, $db) {
 
 $app->put('/building/:id', function ($id) use ($app, $db) {
 	// TODO: Kontrollera om användaren har behörighet att ändra byggnad
-	if (intval($id) < 1) {
-		$app->halt(400, 'Bad request');
-	}
 	
-	$id = $app->request->post('id');
+	$id = intval($id);
 	$name = $app->request->post('name');
 	$description = $app->request->post('description');
-	$site = $app->request->post('site');
+	$site = intval($app->request->post('site'));
 	
-	if (!(intval($id) > 0 && strlen($name) > 0 &&
-			strlen($description) > 0 &&  intval($site) > 0)) {
+	if (!($id > 0 && strlen($name) > 0 &&
+			strlen($description) > 0 &&  $site > 0)) {
 		$app->halt(400, 'Bad request');
 	}
 	
@@ -90,7 +89,10 @@ $app->put('/building/:id', function ($id) use ($app, $db) {
 
 $app->delete('/building/:id', function ($id) use ($app, $db) {
 	// TODO: Kontrollera om användaren har behörighet att ta bort byggnad
-	if (intval($id) < 1) {
+	
+	$id = intval($id);
+	
+	if ($id < 1) {
 		$app->halt(400, 'Bad request');
 	}
 	
@@ -100,7 +102,10 @@ $app->delete('/building/:id', function ($id) use ($app, $db) {
 });
 
 $app->get('/building/:id/facilities', function ($id) use ($app, $db) {
-	if (intval($id) < 1) {
+	
+	$id = intval($id);
+	
+	if ($id < 1) {
 		$app->halt(400, 'Bad request');
 	}
 	
@@ -115,13 +120,11 @@ $app->get('/building/:id/facilities', function ($id) use ($app, $db) {
 
 $app->post('/building/:id/facilities', function ($id) use ($app, $db) {
 	// TODO: Kontrollera om användaren har behörighet att ge byggnader nya avdelningar
-	if (intval($id) < 1) {
-		$app->halt(400, 'Bad request');
-	}
 	
-	$facility = $app->request->post('facility');
+	$id = intval($id);
+	$facility = intval($app->request->post('facility'));
 	
-	if (intval($facility) < 1) {
+	if ($id < 1 || $facility < 1) {
 		$app->halt(400, 'Bad request');
 	}
 	
@@ -137,7 +140,7 @@ $app->post('/building/:id/facilities', function ($id) use ($app, $db) {
 			$app->response()->status(201);
 			break;
 		case 23000:
-			$app->halt(409, "Buildings 'id' already has this facility");
+			$app->halt(409, "Buildings '$id' already has this facility");
 			break;
 		default:
 			$app->halt(500, $errors[2]);
@@ -147,7 +150,10 @@ $app->post('/building/:id/facilities', function ($id) use ($app, $db) {
 $app->delete('/building/:id/facilities/:fid', function ($id, $fid) use ($app, $db) {
 	// TODO: Kontrollera om användaren har behörighet att ta bort byggandens avdelningar
 	
-	if (intval($id) < 1 || intval($fid) < 1) {
+	$id = intval($id);
+	$fid = intval($fid);
+	
+	if ($id < 1 || $fid < 1) {
 		$app->halt(400, 'Bad request');
 	}
 	
