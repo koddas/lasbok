@@ -113,8 +113,9 @@ $app->get('/user/:id/roles', function ($id) use ($app, $db) {
 $app->post('/user/:id/roles', function ($id) use ($app, $db) {
 	// TODO: Kontrollera om användaren har behörighet att ge användare nya roller
 	$role = $app->request->post('role');
+	$id = intval(id);
 	
-	if (intval($role) < 1) {
+	if ($role < 1) {
 		$app->halt(400, 'Bad request');
 	}
 	
@@ -140,7 +141,9 @@ $app->post('/user/:id/roles', function ($id) use ($app, $db) {
 $app->delete('/user/:id/roles/:rid', function ($id, $rid) use ($app, $db) {
 	// TODO: Kontrollera om användaren har behörighet att ta bort användares roller
 	
-	if (intval($rid) < 1) {
+	$id = intval(id);
+	
+	if ($rid < 1) {
 		$app->halt(400, 'Bad request');
 	}
 	
