@@ -77,7 +77,9 @@ $app->put('/card/:id', function ($id) use ($app, $db) {
 $app->delete('/card/:id', function ($id) use ($app, $db) {
 	// TODO: Kontrollera om användaren har behörighet att ta bort kort
 	
-	if (intval($id) < 1) {
+	$id = intval($id);
+	
+	if ($id < 1) {
 		$app->halt(400, 'Bad request');
 	}
 	
@@ -87,7 +89,9 @@ $app->delete('/card/:id', function ($id) use ($app, $db) {
 });
 
 $app->get('/card/:id/ports', function ($id) use ($app, $db) {
-	if (intval($id) < 1) {
+	$id = intval($id);
+	
+	if ($id < 1) {
 		$app->halt(400, 'Bad request');
 	}
 	
@@ -100,7 +104,10 @@ $app->get('/card/:id/ports', function ($id) use ($app, $db) {
 });
 
 $app->get('/card/:id/ports/:pid', function ($id, $pid) use ($app, $db) {
-	if (intval($id) < 1 || intval($pid) < 1) {
+	$id = intval($id);
+	$pid = intval($pid);
+	
+	if ($id < 1 || $pid < 1) {
 		$app->halt(400, 'Bad request');
 	}
 	
@@ -113,7 +120,10 @@ $app->get('/card/:id/ports/:pid', function ($id, $pid) use ($app, $db) {
 });
 
 $app->get('/card/:id/ports/:pid/door', function ($id, $pid) use ($app, $db) {
-	if (intval($id) < 1 || intval($pid) < 1) {
+	$id = intval($id);
+	$pid = intval($pid);
+	
+	if ($id < 1 || $pid < 1) {
 		$app->halt(400, 'Bad request');
 	}
 	
@@ -128,8 +138,10 @@ $app->get('/card/:id/ports/:pid/door', function ($id, $pid) use ($app, $db) {
 $app->post('/card/:id/ports/:pid/door', function ($id, $pid) use ($app, $db) {
 	// TODO: Kontrollera om användaren har behörighet att koppla dörr med port 
 	$did = intval($app->post('door'));
+	$id = intval($id);
+	$pid = intval($pid);
 	
-	if (intval($id) < 1 || intval($pid) < 1 || $did < 0) {
+	if ($id < 1 || $pid < 1 || $did < 0) {
 		$app->halt(400, 'Bad request');
 	}
 	
@@ -142,7 +154,10 @@ $app->post('/card/:id/ports/:pid/door', function ($id, $pid) use ($app, $db) {
 $app->delete('/card/:id/ports/:pid/door', function ($id, $pid) use ($app, $db) {
 	// TODO: Kontrollera om användaren har behörighet att ta bort dörr från port
 	
-	if (intval($id) < 1 || intval($pid) < 1) {
+	$id = intval($id);
+	$pid = intval($pid);
+	
+	if ($id < 1 || $pid < 1) {
 		$app->halt(400, 'Bad request');
 	}
 	
