@@ -36,7 +36,7 @@ $app->post('/role', function () use ($app, $db) {
 			$app->response()->status(201);
 			break;
 		case 23000:
-			$app->halt(409, "User role 'name' already exists");
+			$app->halt(409, "User role '$name' already exists");
 			break;
 		default:
 			$app->halt(500, $errors[2]);
@@ -45,7 +45,7 @@ $app->post('/role', function () use ($app, $db) {
 
 $app->put('/role/:id', function ($id) use ($app, $db) {
 	// TODO: Kontrollera om användaren har behörighet att förändra roller
-	$id = intval(id);
+	$id = intval($id);
 	
 	$name = $app->request->put('name');
 	$description = $app->request->put('description');
@@ -67,7 +67,7 @@ $app->put('/role/:id', function ($id) use ($app, $db) {
 			$app->response()->status(201);
 			break;
 		case 23000:
-			$app->halt(409, "User role 'name' already exists");
+			$app->halt(409, "User role '$id' already exists");
 			break;
 		default:
 			$app->halt(500, $errors[2]);
@@ -77,7 +77,7 @@ $app->put('/role/:id', function ($id) use ($app, $db) {
 $app->delete('/role/:id', function ($id) use ($app, $db) {
 	// TODO: Kontrollera om användaren har behörighet att ta bort roller
 	
-	$id = intval(id);
+	$id = intval($id);
 	
 	if ($id < 1) {
 		$app->halt(400, 'Bad request');

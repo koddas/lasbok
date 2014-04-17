@@ -7,6 +7,12 @@ $app->get('/user', function () use ($app, $db) {
 });
 
 $app->get('/user/:id', function ($id) use ($app, $db) {
+	$id = intval($id);
+	
+	if (strlen($id) < 1) {
+		$app->halt(400, 'Bad request');
+	}
+	
 	$cols = array('user_name', 'first_name', 'last_name');
 	$where = array('user_name' => $id);
 	$users = $db->select('Users', $cols, $where);
@@ -112,7 +118,7 @@ $app->get('/user/:id/roles', function ($id) use ($app, $db) {
 
 $app->post('/user/:id/roles', function ($id) use ($app, $db) {
 	// TODO: Kontrollera om användaren har behörighet att ge användare nya roller
-	$role = $app->request->post('role');
+	$role = intval($app->request->post('role'));
 	$id = intval(id);
 	
 	if ($role < 1) {
@@ -140,8 +146,6 @@ $app->post('/user/:id/roles', function ($id) use ($app, $db) {
 
 $app->delete('/user/:id/roles/:rid', function ($id, $rid) use ($app, $db) {
 	// TODO: Kontrollera om användaren har behörighet att ta bort användares roller
-	
-	$id = intval(id);
 	
 	if ($rid < 1) {
 		$app->halt(400, 'Bad request');

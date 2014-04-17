@@ -38,10 +38,16 @@ $app->post('/customer', function () use ($app, $db) {
 		$app->halt(400, 'Bad request');
 	}
 	
-	$values = array('id' => $id, 'name' => $name,
-			'contact_name' => $contact_name, 'phone_number' => $phone_number,
-			'email' => $email, 'postal_address' => $postal_address,
-			'invoicing_address' => $invoicing_address, 'comments' => $comments);
+	$values = array(
+			'id' => $id,
+			'name' => $name,
+			'contact_name' => $contact_name,
+			'phone_number' => $phone_number,
+			'email' => $email,
+			'postal_address' => $postal_address,
+			'invoicing_address' => $invoicing_address,
+			'comments' => $comments
+	);
 	
 	$db->insert('Customers', $values);
 	
@@ -122,9 +128,12 @@ $app->get('/customer/search/:string', function ($string) use ($app, $db) {
 	$where = array(
 			'LIKE' => array(
 					'OR' => array(
-							'name' => $name, 'contact_name' => $contact_name, 
-							'phone_number' => $phone_number, 'email' => $email,
-							'postal_address' => $postal_address)));
+							'name' => $name,
+							'contact_name' => $contact_name, 
+							'phone_number' => $phone_number,
+							'email' => $email,
+							'postal_address' => $postal_address
+					)));
 	
 	$customer = $db->select('Customers', $cols, $where);
 	if (count($customer) > 0) {
@@ -140,7 +149,7 @@ $app->get('/customer/from/:start/to/:stop', function ($start, $stop) use ($app, 
 	$where = array(
 			'LIMIT' => array($start, $stop));
 	
-	$customer = $db->select('Custmers', $cols, $where);
+	$customer = $db->select('Customers', $cols, $where);
 	if (count($customer) > 0) {
 		echo json_encode($customer[0], JSON_FORCE_OBJECT | JSON_UNESCAPED_UNICODE);
 	} else {
