@@ -11,7 +11,7 @@ $app->get('/customer/:id', function ($id) use ($app, $db) {
 	$cols = array('id', 'name', 'contact_name', 'phone_number','email',
 			'postal_address', 'invoicing_address', 'comments');
 	$where = array('id' => $id);
-	$customer = $db->select('Custmers', $cols, $where);
+	$customer = $db->select('Customers', $cols, $where);
 	if (count($customer) > 0) {
 		echo json_encode($users[0], JSON_FORCE_OBJECT | JSON_UNESCAPED_UNICODE);
 	} else {
@@ -95,7 +95,7 @@ $app->get('/customer/:id', function ($id) use ($app, $db) {
 			$app->response()->status(201);
 			break;
 		case 23000:
-			$app->halt(409, "Customer 'id' already exists");
+			$app->halt(409, "Customer '$id' already exists");
 			break;
 		default:
 			$app->halt(500, $errors[2]);
@@ -123,7 +123,7 @@ $app->get('/customer/search/:string', function ($string) use ($app, $db) {
 							'phone_number' => $phone_number, 'email' => $email,
 							'postal_address' => $postal_address)));
 	
-	$customer = $db->select('Custmers', $cols, $where);
+	$customer = $db->select('Customers', $cols, $where);
 	if (count($customer) > 0) {
 		echo json_encode($users[0], JSON_FORCE_OBJECT | JSON_UNESCAPED_UNICODE);
 	} else {
@@ -135,7 +135,7 @@ $app->get('/customer/from/:start/to/:stop', function ($start, $stop) use ($app, 
 	$cols = array('id', 'name', 'contact_name', 'phone_number','email',
 			'postal_address');
 	$where = array(
-			'LIMIT' => array($start,$stop));
+			'LIMIT' => array($start, $stop));
 	
 	$customer = $db->select('Custmers', $cols, $where);
 	if (count($customer) > 0) {
