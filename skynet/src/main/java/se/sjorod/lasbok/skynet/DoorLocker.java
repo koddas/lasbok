@@ -6,6 +6,8 @@ import org.slf4j.LoggerFactory;
 
 import se.sjorod.lasbok.skynet.net.HTTPClient;
 
+// TODO: Test this class
+
 /**
  * This class is used for locking and unlocking doors.
  * 
@@ -38,6 +40,7 @@ public class DoorLocker {
 	public void lockDoor(Door door) throws DoorLockException {
 		logger.info("Locked door " + door.toString() + " at " +
 					(new DateTime()).toString());
+		// TODO: Do the lock call
 	}
 	
 	/**
@@ -49,6 +52,6 @@ public class DoorLocker {
 	public void unlockDoor(Door door) throws DoorLockException {
 		logger.info("Locked door " + door.toString() + " at " +
 				(new DateTime()).toString());
-		
+		// TODO: Do the unlock call
 	}
 }

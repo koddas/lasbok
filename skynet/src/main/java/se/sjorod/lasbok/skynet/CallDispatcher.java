@@ -4,6 +4,8 @@ import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+// TODO: Test and document this class
+
 public class CallDispatcher {
 	private DoorLocker locker;
 	private Logger logger;

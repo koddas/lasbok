@@ -2,7 +2,6 @@ package se.sjorod.lasbok.skynet;
 
 import java.net.InetAddress;
 
-
 /**
  * This class represents a Denkovi relay card. As the actual Denkovi card
  * incarnations come with different numbers of relays, this class is
@@ -10,7 +9,6 @@ import java.net.InetAddress;
  * its subclasses.
  * 
  * @author johan
- *
  */
 public abstract class DenkoviCard {
 	private InetAddress ipaddress;

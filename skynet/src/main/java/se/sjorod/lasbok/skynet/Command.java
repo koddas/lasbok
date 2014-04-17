@@ -1,5 +1,7 @@
 package se.sjorod.lasbok.skynet;
 
+// TODO: Test and document this class
+
 public class Command {
 	public static final int LOCK_ALL = 0;
 	public static final int UNLOCK_ALL = 1;

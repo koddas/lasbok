@@ -6,6 +6,8 @@ import org.slf4j.LoggerFactory;
 
 import se.sjorod.lasbok.skynet.net.HTTPClient;
 
+// TODO: Test and dcoument this class
+
 public class Heartbeat {
 	private Logger logger;
 	private HTTPClient client;
@@ -20,5 +22,7 @@ public class Heartbeat {
 	
 	private void sendHeartbeat() {
 		logger.info("Heartbeat sent at " + (new DateTime()).toString());
+		
+		// TODO: Actually send a heartbeat signal. Also, where should we send it?
 	}
 }

@@ -2,12 +2,12 @@ package se.sjorod.lasbok.skynet;
 
 import java.net.InetAddress;
 
+// TODO: Test this class
 
 /**
  * This class represents a Denkovi relay card with 16 relays.
  * 
  * @author johan
- *
  */
 public class DenkoviCard16 extends DenkoviCard {
 	private static final String OID_1_TO_8 = ".1.3.6.1.4.1.19865.1.2.1.33.0";
@@ -123,6 +123,8 @@ public class DenkoviCard16 extends DenkoviCard {
 	 * 		   An element is set to true if a relay is on, otherwise false.
 	 */
 	public boolean[] getStates() {
+		// TODO: Implement this.
+		
 		return null;
 	}
 }

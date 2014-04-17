@@ -7,11 +7,12 @@ import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+// TODO: Test this class
+
 /**
  * Represents a door with corresponding lock.
  * 
  * @author johan
- *
  */
 public class Door implements Payload {
 	private int port;
