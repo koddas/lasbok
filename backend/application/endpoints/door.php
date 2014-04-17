@@ -18,12 +18,17 @@ $app->get('/door/:id', function ($id) use ($app, $db) {
 });
 
 $app->post('/door', function () use ($app, $db) {
-	$cards_id = intval($app->request->post('cards_id'));
-	$port = $app->request->post('port');
+	$cards_id = intval($app->request->post('card'));
+	$port = intval($app->request->post('port'));
 	$is_internal = $app->request->post('is_internal');
 	$description = $app->request->post('description');
 	
-	$values = array('Relay_cards_id' => $cards_id, 'port' => $port,
+	if (!($card > 0 && strlen($port) > 0 &&
+			isset($is_internal) &&  strlen($description) > 0)) {
+		$app->halt(400, 'Bad request');
+	}
+	
+	$values = array('Relay_cards_id' => $card, 'port' => $port,
 			'is_internal' => $is_internal, 'description' => $description);
 	
 	$errors = $db->error();
@@ -44,13 +49,13 @@ $app->put('/door/:id', function ($id) use ($app, $db) {
 	// TODO: Kontrollera om användaren har behörighet att ändra dörr
 	
 	$id = intval($app->request->post('id'));
-	$cards_id = intval($app->request->post('cards_id'));
+	$card = intval($app->request->post('card'));
 	$port = $app->request->post('port');
 	$is_internal = $app->request->post('is_internal');
 	$description = $app->request->post('description');
 	
-	if (!($id > 0 && $cards_id > 0 && strlen($port) > 0 &&
-			strlen($is_internal) > 0 &&  intval($description) > 0)) {
+	if (!($id > 0 && $card > 0 && intval($port) >= 0 &&
+			isset($is_internal) &&  strlen($description) > 0)) {
 		$app->halt(400, 'Bad request');
 	}
 	
