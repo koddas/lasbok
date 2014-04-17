@@ -14,7 +14,8 @@ $app->get('/reservation/:id', function ($id) use ($app, $db) {
 	}
 	$cols = array('id', 'description', 'start_date', 'end_date',
 			'number_of_guests', 'Customers_id', 'Customer_types_id');
-	$reservation = $db->select('Reservations', $join, $cols, $select);
+	$select = array('id' => $id);
+	$reservation = $db->select('Reservations', $cols, $select);
 	
 	if (count($reservations) > 0) {
 		echo json_encode($reservations[0], JSON_FORCE_OBJECT | JSON_UNESCAPED_UNICODE);
@@ -47,10 +48,14 @@ $app->post('/reservation', function () use ($app, $db) {
 		$app->halt(400, 'Bad request');
 	}
 	
-	$values = array('Customers_id' => $customers_id, 'Customer_categories_id' =>
-			$customer_categories_id, 'sites_id' => $Sites_id,
-			'description' => $description, 'start_date' => $start_date,
-			'end_date' => $end_date, 'number_of_guests' => $number_of_guests,
+	$values = array(
+			'Customers_id' => $customers_id,
+			'Customer_categories_id' => $customer_categories_id,
+			'sites_id' => $Sites_id,
+			'description' => $description,
+			'start_date' => $start_date,
+			'end_date' => $end_date,
+			'number_of_guests' => $number_of_guests,
 			'extras' => $extras);
 	
 	$db->insert('Reservations', $values);
@@ -60,7 +65,7 @@ $app->post('/reservation', function () use ($app, $db) {
 			$app->response()->status(201);
 			break;
 		case 23000:
-			$app->halt(409, "Reservation 'id' already exists");
+			$app->halt(409, "Reservation '$id' already exists");
 			break;
 		default:
 			$app->halt(500, $errors[2]);
@@ -91,10 +96,14 @@ $app->put('/reservation/:id', function ($id) use ($app, $db) {
 		$app->halt(400, 'Bad request');
 	}
 	
-	$values = array('Customers_id' => $customers_id, 'Customer_categories_id' =>
-			$customer_categories_id, 'sites_id' => $Sites_id,
-			'description' => $description, 'start_date' => $start_date,
-			'end_date' => $end_date, 'number_of_guests' => $number_of_guests,
+	$values = array(
+			'Customers_id' => $customers_id,
+			'Customer_categories_id' => $customer_categories_id,
+			'sites_id' => $Sites_id,
+			'description' => $description,
+			'start_date' => $start_date,
+			'end_date' => $end_date,
+			'number_of_guests' => $number_of_guests,
 			'extras' => $extras);
 	
 	$where = array('id' => $id);
@@ -108,7 +117,7 @@ $app->put('/reservation/:id', function ($id) use ($app, $db) {
 			$app->response()->status(201);
 			break;
 		case 23000:
-			$app->halt(409, "User role 'name' already exists");
+			$app->halt(409, "User role '$name' already exists");
 			break;
 		default:
 			$app->halt(500, $errors[2]);
@@ -143,8 +152,10 @@ $app->post('/reservation/:id/facilities', function ($id) use ($app, $db) {
 		$app->halt(400, 'Bad request');
 	}
 	
-	$values = array('Reservations_id' => $reservations_id, 'Facility_partitions_id' =>
-			$facility_partitions_id);
+	$values = array(
+			'Reservations_id' => $reservations_id,
+			'Facility_partitions_id' => $facility_partitions_id
+	);
 	
 	$db->insert('Reservation_has_Facilities', $values);
 	
@@ -167,7 +178,10 @@ $app->delete('/reservation/:id/facilities/:fid', function ($id, $fid) use ($app,
 		$app->halt(400, 'Bad request');
 	}
 	
-	$values = array('Reservations_id' => $reservations_id, 'Facility_partitions_id' => $facility_partitions_id);
+	$values = array(
+			'Reservations_id' => $reservations_id,
+			'Facility_partitions_id' => $facility_partitions_id
+	);
 	
 	$db->delete('Reservation_has_Facilities', $values);
 });
