@@ -21,8 +21,9 @@ $app->post('/card', function () use ($app, $db) {
 	// TODO: Kontrollera om användaren har behörighet att skapa kort
 	$site = $app->request->post('site');
 	$address = inet_pton($app->request->post('address'));
+	$site = intval(site);
 	
-	if (strlen($site) < 1 || !$address) {
+	if ($site < 1 || !$address) {
 		$app->halt(400, 'Bad request');
 	}
 	
@@ -49,8 +50,9 @@ $app->put('/card/:id', function ($id) use ($app, $db) {
 	// TODO: Kontrollera om användaren har behörighet att ändra kort
 	$site = $app->request->put('site');
 	$address = inet_pton($app->request->put('address'));
+	$site = intval(site);
 	
-	if (strlen($site) < 1 || !$address) {
+	if ($site < 1 || !$address) {
 		$app->halt(400, 'Bad request');
 	}
 	
