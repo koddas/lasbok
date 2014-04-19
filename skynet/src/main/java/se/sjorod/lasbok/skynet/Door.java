@@ -28,17 +28,31 @@ public class Door implements Payload {
 	public Door(int port, String card) {
 		logger = LoggerFactory.getLogger(Door.class);
 		
+		if (port < 0) {
+			logger.error("Error at " + (new DateTime()).toString());
+			logger.error("Bad port number: " + port);
+			throw new IllegalArgumentException();
+		}
 		this.port = port;
+		
 		try {
 			this.card = InetAddress.getByName(card);
 		} catch (UnknownHostException e) {
 			logger.error("Error at " + (new DateTime()).toString());
-			logger.error("Couldn't convert string to IP-address: " + card);
+			logger.error("Couldn't convert string to IP address: " + card);
 			logger.error("Error message: " + e.getMessage());
+			throw new IllegalArgumentException();
 		}
 	}
 	
 	public Door(int port, InetAddress card) {
+		logger = LoggerFactory.getLogger(Door.class);
+		
+		if (port < 0) {
+			logger.error("Error at " + (new DateTime()).toString());
+			logger.error("Bad port number: " + port);
+			throw new IllegalArgumentException();
+		}
 		this.port = port;
 		this.card = card;
 	}
