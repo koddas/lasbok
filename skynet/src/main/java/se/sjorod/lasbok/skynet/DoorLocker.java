@@ -9,10 +9,10 @@ import se.sjorod.lasbok.skynet.net.HTTPClient;
 // TODO: Test this class
 
 /**
- * This class is used for locking and unlocking doors.
+ * This class is used for locking and unlocking doors. This class is
+ * realised as a singleton.
  * 
  * @author johan
- *
  */
 public class DoorLocker {
 	private HTTPClient client;
@@ -27,6 +27,11 @@ public class DoorLocker {
 		public static final DoorLocker INSTANCE = new DoorLocker();
 	}
 	
+	/**
+	 * Gets a reference to the DoorLocker instance.
+	 * 
+	 * @return A reference to a DoorLocker object.
+	 */
 	public static DoorLocker getInstance() {
 		return DoorLockerHolder.INSTANCE;
 	}
