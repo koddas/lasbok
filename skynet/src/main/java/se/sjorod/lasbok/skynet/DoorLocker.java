@@ -54,4 +54,26 @@ public class DoorLocker {
 				(new DateTime()).toString());
 		// TODO: Do the unlock call
 	}
+	
+	/**
+	 * Locks all doors at a site.
+	 * 
+	 * @param site The site to lock down.
+	 */
+	public void lockDoorsAtSite(Site site) {
+		logger.info("Locked all doors at " + site.toString() + " at " +
+				(new DateTime()).toString());
+		// TODO: Do the lock calls
+	}
+	
+	/**
+	 * Unlocks all doors at a site.
+	 * 
+	 * @param site The site to unlock.
+	 */
+	public void unlockDoorsAtSite(Site site) {
+		logger.info("Unlocked all doors at " + site.toString() + " at " +
+				(new DateTime()).toString());
+		// TODO: Do the unlock calls
+	}
 }
