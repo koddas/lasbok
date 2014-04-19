@@ -2,18 +2,20 @@ package se.sjorod.lasbok.skynet.tests;
 
 import static org.junit.Assert.*;
 
+import mockit.Injectable;
+
 import org.junit.Test;
+
+import se.sjorod.lasbok.skynet.CallDispatcher;
+import se.sjorod.lasbok.skynet.DoorLocker;
 
 public class CallDispatcherTest {
 
-	@Test
-	public void testCallDispatcher() {
-		fail("Not yet implemented");
-	}
-
+	@Injectable DoorLocker locker;
+	
 	@Test
 	public void testDispatch() {
-		fail("Not yet implemented");
+		CallDispatcher dispatcher = new CallDispatcher();
 	}
 
 }
