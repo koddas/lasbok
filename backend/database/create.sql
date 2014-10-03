@@ -366,20 +366,20 @@ COMMENT = 'This table contains information about buildings at a site. B' /* comm
 -- -----------------------------------------------------
 -- Table `176690-lasbok`.`Buildings_has_Facilities`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `176690-lasbok`.`Buildings_has_Facilities` ;
+DROP TABLE IF EXISTS `176690-lasbok`.`Building_has_Facilities` ;
 
-CREATE  TABLE IF NOT EXISTS `176690-lasbok`.`Buildings_has_Facilities` (
+CREATE  TABLE IF NOT EXISTS `176690-lasbok`.`Building_has_Facilities` (
   `Buildings_id` INT NOT NULL ,
   `Facilities_id` INT NOT NULL ,
   PRIMARY KEY (`Buildings_id`, `Facilities_id`) ,
-  INDEX `fk_Buildings_has_Facilities_Facilities1` (`Facilities_id` ASC) ,
-  INDEX `fk_Buildings_has_Facilities_Buildings1` (`Buildings_id` ASC) ,
-  CONSTRAINT `fk_Buildings_has_Facilities_Buildings1`
+  INDEX `fk_Building_has_Facilities_Facilities1` (`Facilities_id` ASC) ,
+  INDEX `fk_Building_has_Facilities_Buildings1` (`Buildings_id` ASC) ,
+  CONSTRAINT `fk_Building_has_Facilities_Buildings1`
     FOREIGN KEY (`Buildings_id` )
     REFERENCES `176690-lasbok`.`Buildings` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Buildings_has_Facilities_Facilities1`
+  CONSTRAINT `fk_Building_has_Facilities_Facilities1`
     FOREIGN KEY (`Facilities_id` )
     REFERENCES `176690-lasbok`.`Facilities` (`id` )
     ON DELETE NO ACTION
