@@ -106,7 +106,7 @@ $app->get('/building/:id/facilities', function ($id) use ($app, $db) {
 	
 	$cols = array('id', 'facilities_id');
 	$select = array('Building_has_facilities.Buildings_id' => $id);
-	$join = array('[>]Buildings_has_facilities'=> array('id' => 'Facilities_id'));
+	$join = array('[>]Building_has_facilities'=> array('id' => 'Facilities_id'));
 
 	$roles = $db->select('Buildings', $join, $cols, $select);
 	
@@ -128,7 +128,7 @@ $app->post('/building/:id/facilities', function ($id) use ($app, $db) {
 	$facilities = array('Buildings_id' => $id,
 			'Facilities_id' => $facility);
 	
-	$db->insert('Buildings_has_facilities', $facilities);
+	$db->insert('Building_has_facilities', $facilities);
 	
 	$errors = $db->error();
 	
@@ -137,7 +137,7 @@ $app->post('/building/:id/facilities', function ($id) use ($app, $db) {
 			$app->response()->status(201);
 			break;
 		case 23000:
-			$app->halt(409, "Buildings 'id' already has this facility");
+			$app->halt(409, "Building 'id' already has this facility");
 			break;
 		default:
 			$app->halt(500, $errors[2]);
@@ -154,7 +154,7 @@ $app->delete('/building/:id/facilities/:fid', function ($id, $fid) use ($app, $d
 	$facilities = array('AND' => array('Buildings_id' => $id,
 			'Facilities_id' => $fid));
 		
-	$db->delete('Buildings_has_facilities', $facilities);
+	$db->delete('Building_has_facilities', $facilities);
 	
 	$app->response()->status(200);
 });
