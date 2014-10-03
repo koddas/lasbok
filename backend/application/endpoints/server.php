@@ -49,18 +49,18 @@ $app->post('/server', function () use ($app, $db) {
 			$app->response()->status(201);
 			break;
 		case 23000:
-			$app->halt(409, "Reservation '$id' already exists");
+			$app->halt(409, "Server '$id' already exists");
 			break;
 		default:
 			$app->halt(500, $errors[2]);
 	}
 });
 
-$app->get('/server/:id', function ($id) use ($app, $db) {
-	$id = intval($app->request->post('id'));
-	$ip = intval($app->request->post('ip'));
-	$software_version = $app->request->post('software_version');
-	$sites_id = intval($app->request->post('site'));
+$app->put('/server/:id', function ($id) use ($app, $db) {
+	$id = intval($app->request->put('id'));
+	$ip = intval($app->request->put('ip'));
+	$software_version = $app->request->put('software_version');
+	$sites_id = intval($app->request->put('site'));
 	
 	if (!($id > 0 && $ip > 0 && $sites_id > 0 &&
 			$software_version > 0)) {
@@ -101,7 +101,6 @@ $app->delete('/server/:id', function ($id) use ($app, $db) {
 	
 	$values = array('id' => $id);
 	
-	$db->delete('Reservations', $values);
-	echo "Server delete: $id";
+	$db->delete('Servers', $values);
 });
 ?>
