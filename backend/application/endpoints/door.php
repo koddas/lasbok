@@ -20,11 +20,11 @@ $app->get('/door/:id', function ($id) use ($app, $db) {
 $app->post('/door', function () use ($app, $db) {
 	$cards_id = intval($app->request->post('card'));
 	$port = intval($app->request->post('port'));
-	$is_internal = $app->request->post('is_internal');
-	$description = $app->request->post('description');
+	$is_internal = boolval($app->request->post('is_internal'));
+	$description = trim($app->request->post('description'));
 	
-	if (!($card > 0 && strlen($port) > 0 &&
-			isset($is_internal) &&  strlen($description) > 0)) {
+	if (!($card > 0 && $port > 0 &&
+			strlen($description) > 0)) {
 		$app->halt(400, 'Bad request');
 	}
 	
@@ -50,12 +50,12 @@ $app->put('/door/:id', function ($id) use ($app, $db) {
 	
 	$id = intval($app->request->post('id'));
 	$card = intval($app->request->post('card'));
-	$port = $app->request->post('port');
-	$is_internal = $app->request->post('is_internal');
-	$description = $app->request->post('description');
+	$port = intval($app->request->post('port'));
+	$is_internal = boolval($app->request->post('is_internal'));
+	$description = trim($app->request->post('description'));
 	
-	if (!($id > 0 && $card > 0 && intval($port) >= 0 &&
-			isset($is_internal) &&  strlen($description) > 0)) {
+	if (!($id > 0 && $card > 0 && $port >= 0 &&
+			strlen($description) > 0)) {
 		$app->halt(400, 'Bad request');
 	}
 	
