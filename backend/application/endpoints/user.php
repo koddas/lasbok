@@ -19,10 +19,10 @@ $app->get('/user/:id', function ($id) use ($app, $db) {
 
 $app->post('/user', function () use ($app, $db) {
 	// TODO: Kontrollera om användaren har behörighet att skapa användare
-	$username = $app->request->post('username');
-	$password = $app->request->post('password');
-	$first_name = $app->request->post('first_name');
-	$last_name = $app->request->post('last_name');
+	$username = trim($app->request->post('username'));
+	$password = trim($app->request->post('password'));
+	$first_name = trim($app->request->post('first_name'));
+	$last_name = trim($app->request->post('last_name'));
 	
 	if (!(strlen($username) > 0 && strlen($password) > 0 &&
 		  strlen($first_name) > 0 && strlen($last_name) > 0)) {
@@ -48,10 +48,10 @@ $app->post('/user', function () use ($app, $db) {
 
 $app->put('/user/:id', function ($id) use ($app, $db) {
 	// TODO: Kontrollera om användaren har behörighet att ändra användare
-	$password = $app->request->put('password');
-	$current_password = $app->request->put('current_password');
-	$first_name = $app->request->put('first_name');
-	$last_name = $app->request->put('last_name');
+	$password = trim($app->request->put('password'));
+	$current_password = trim($app->request->put('current_password'));
+	$first_name = trim($app->request->put('first_name'));
+	$last_name = trim($app->request->put('last_name'));
 	
 	if (strlen($current_password) < 1) {
 		$app->halt(400, 'Bad request');

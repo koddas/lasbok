@@ -17,8 +17,8 @@ $app->get('/role/:id', function ($id) use ($app, $db) {
 
 $app->post('/role', function () use ($app, $db) {
 	// TODO: Kontrollera om användaren har behörighet att skapa nya roller
-	$name = $app->request->post('name');
-	$description = $app->request->post('description');
+	$name = trim($app->request->post('name'));
+	$description = trim($app->request->post('description'));
 	
 	if (strlen($name) < 1 || strlen($description) < 1) {
 		$app->halt(400, 'Bad request');
@@ -46,8 +46,8 @@ $app->post('/role', function () use ($app, $db) {
 $app->put('/role/:id', function ($id) use ($app, $db) {
 	// TODO: Kontrollera om användaren har behörighet att förändra roller
 	
-	$name = $app->request->put('name');
-	$description = $app->request->put('description');
+	$name = trim($app->request->put('name'));
+	$description = trim($app->request->put('description'));
 	
 	if (intval($id) < 1 || strlen($name) < 1 || strlen($description) < 1) {
 		$app->halt(400, 'Bad request');
