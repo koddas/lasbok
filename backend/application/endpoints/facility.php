@@ -1,6 +1,6 @@
 <?php
 $app->get('/facility', function () use ($app, $db) {
-	$cols = array('*');
+	$cols = array('id', array('Sites_id' => 'site'), 'name', 'description');
 	
 	$facilities = $db->select('Facilities', $cols);
 	
@@ -13,7 +13,7 @@ $app->get('/facility/:id', function ($id) use ($app, $db) {
 	if ($id < 1) {
 		$app->halt(400, 'Bad request');
 	}
-	$cols = array('*');
+	$cols = array('id', array('Sites_id' => 'site'), 'name', 'description');
 	$select = array('id' => $id);
 	$facilities = $db->select('Facilities', $cols, $select);
 	
@@ -26,8 +26,8 @@ $app->get('/facility/:id', function ($id) use ($app, $db) {
 
 $app->post('/facility', function () use ($app, $db) {
 	$site = intval($app->request->post('site'));
-	$name = $app->request->post('name');
-	$description = $app->request->post('description');
+	$name = trim($app->request->post('name'));
+	$description = trim($app->request->post('description'));
 	
 	if (!($site > 0 && strlen($name) > 0 &&
 			strlen($description) > 0)) {
@@ -57,8 +57,8 @@ $app->post('/facility', function () use ($app, $db) {
 $app->put('/facility/:id', function ($id) use ($app, $db) {
 	$id = intval($app->request->post('id'));
 	$site = intval($app->request->post('site'));
-	$name = $app->request->post('name');
-	$description = $app->request->post('description');
+	$name = trim($app->request->post('name'));
+	$description = trim($app->request->post('description'));
 	
 	if (!($id > 0 && $site > 0 && strlen($name) > 0 &&
 			strlen($description) > 0)) {
@@ -107,7 +107,8 @@ $app->get('/facility/:id/partitions', function ($id) use ($app, $db) {
 		$app->halt(400, 'Bad request');
 	}
 	
-	$cols = array('id', 'facilities_id');
+	$cols = array(array('Facilities_id' => 'facility'),
+			array('Partitions_id' => 'partition'));
 	$select = array('Facility_has_Partitions.Partitions_id' => $id);
 	$join = array('[>]Facility_has_Partitions' => array('id' => 'Facilities_id'));
 
@@ -169,7 +170,8 @@ $app->get('/facility/:id/prices', function ($id) use ($app, $db) {
 		$app->halt(400, 'Bad request');
 	}
 	
-	$cols = array('*');
+	$cols = array(array('Customer_categories_id' => 'customer_category'),
+			array('Facilities_id' => 'facility'), 'price', 'per_head');
 	$select = array('Prices.Facilities_id' => $id);
 	$join = array('[>]Prices' => array('id' => 'Facilities_id'));
 
