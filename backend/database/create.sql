@@ -1,6 +1,6 @@
 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
-SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL';
+SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
 
 CREATE SCHEMA IF NOT EXISTS `176690-lasbok` DEFAULT CHARACTER SET utf8 COLLATE utf8_swedish_ci ;
 USE `176690-lasbok` ;
@@ -36,7 +36,7 @@ CREATE  TABLE IF NOT EXISTS `176690-lasbok`.`Sites` (
   PRIMARY KEY (`id`) ,
   UNIQUE INDEX `name_UNIQUE` (`name` ASC) )
 ENGINE = InnoDB
-COMMENT = 'This table contains the rudimentary information about our fa' /* comment truncated */;
+COMMENT = 'This table contains the rudimentary information about our fa /* comment truncated */ /*cilities, i.e. Gamlegård and Sjöröd*/';
 
 
 -- -----------------------------------------------------
@@ -50,14 +50,14 @@ CREATE  TABLE IF NOT EXISTS `176690-lasbok`.`Facilities` (
   `name` VARCHAR(45) NULL ,
   `description` TEXT NULL ,
   PRIMARY KEY (`id`, `Sites_id`) ,
-  INDEX `fk_Facilities_Sites1` (`Sites_id` ASC) ,
+  INDEX `fk_Facilities_Sites1_idx` (`Sites_id` ASC) ,
   CONSTRAINT `fk_Facilities_Sites1`
     FOREIGN KEY (`Sites_id` )
     REFERENCES `176690-lasbok`.`Sites` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
-COMMENT = 'This table contains information about facilities, e.g. certa' /* comment truncated */;
+COMMENT = 'This table contains information about facilities, e.g. certa /* comment truncated */ /*in rooms, houses, etc. Each partition can contain one or more physical partitions.*/';
 
 
 -- -----------------------------------------------------
@@ -70,7 +70,7 @@ CREATE  TABLE IF NOT EXISTS `176690-lasbok`.`Partitions` (
   `description` TEXT NULL ,
   PRIMARY KEY (`id`) )
 ENGINE = InnoDB
-COMMENT = 'This table holds information regarding the physical properti' /* comment truncated */;
+COMMENT = 'This table holds information regarding the physical properti /* comment truncated */ /*es of a facility, such as which doors that need to be opened.*/';
 
 
 -- -----------------------------------------------------
@@ -83,7 +83,7 @@ CREATE  TABLE IF NOT EXISTS `176690-lasbok`.`Customer_categories` (
   `description` VARCHAR(45) NULL ,
   PRIMARY KEY (`id`) )
 ENGINE = InnoDB
-COMMENT = 'This table contains information about the diffenent customer' /* comment truncated */;
+COMMENT = 'This table contains information about the diffenent customer /* comment truncated */ /* categories.*/';
 
 
 -- -----------------------------------------------------
@@ -106,9 +106,9 @@ CREATE  TABLE IF NOT EXISTS `176690-lasbok`.`Reservations` (
   `quoted_price` INT NULL ,
   `extras` TEXT NULL ,
   PRIMARY KEY (`id`, `Customers_id`, `Customer_categories_id`, `Sites_id`) ,
-  INDEX `fk_Bookings_Customer_categories1` (`Customer_categories_id` ASC) ,
-  INDEX `fk_Bookings_Customers1` (`Customers_id` ASC) ,
-  INDEX `fk_Bookings_Sites1` (`Sites_id` ASC) ,
+  INDEX `fk_Bookings_Customer_categories1_idx` (`Customer_categories_id` ASC) ,
+  INDEX `fk_Bookings_Customers1_idx` (`Customers_id` ASC) ,
+  INDEX `fk_Bookings_Sites1_idx` (`Sites_id` ASC) ,
   CONSTRAINT `fk_Bookings_Customer_categories1`
     FOREIGN KEY (`Customer_categories_id` )
     REFERENCES `176690-lasbok`.`Customer_categories` (`id` )
@@ -138,14 +138,14 @@ CREATE  TABLE IF NOT EXISTS `176690-lasbok`.`Relay_cards` (
   `Sites_id` INT NOT NULL ,
   `ipaddress` INT UNSIGNED NULL ,
   PRIMARY KEY (`id`, `Sites_id`) ,
-  INDEX `fk_Relay_cards_Sites1` (`Sites_id` ASC) ,
+  INDEX `fk_Relay_cards_Sites1_idx` (`Sites_id` ASC) ,
   CONSTRAINT `fk_Relay_cards_Sites1`
     FOREIGN KEY (`Sites_id` )
     REFERENCES `176690-lasbok`.`Sites` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
-COMMENT = 'This table holds information about the relay cards used to c' /* comment truncated */;
+COMMENT = 'This table holds information about the relay cards used to c /* comment truncated */ /*ontroll access to different rooms.*/';
 
 
 -- -----------------------------------------------------
@@ -160,7 +160,7 @@ CREATE  TABLE IF NOT EXISTS `176690-lasbok`.`Doors` (
   `is_internal` TINYINT(1) NOT NULL DEFAULT false ,
   `description` TINYTEXT NULL ,
   PRIMARY KEY (`id`, `Relay_cards_id`) ,
-  INDEX `fk_Doors_Relay_cards1` (`Relay_cards_id` ASC) ,
+  INDEX `fk_Doors_Relay_cards1_idx` (`Relay_cards_id` ASC) ,
   CONSTRAINT `fk_Doors_Relay_cards1`
     FOREIGN KEY (`Relay_cards_id` )
     REFERENCES `176690-lasbok`.`Relay_cards` (`id` )
@@ -177,17 +177,17 @@ DROP TABLE IF EXISTS `176690-lasbok`.`Reservation_has_Facilities` ;
 
 CREATE  TABLE IF NOT EXISTS `176690-lasbok`.`Reservation_has_Facilities` (
   `Reservations_id` INT NOT NULL ,
-  `Facility_partitions_id` INT NOT NULL ,
-  PRIMARY KEY (`Reservations_id`, `Facility_partitions_id`) ,
-  INDEX `fk_Bookings_has_Facility_partitions_Facility_partitions1` (`Facility_partitions_id` ASC) ,
-  INDEX `fk_Bookings_has_Facility_partitions_Bookings1` (`Reservations_id` ASC) ,
-  CONSTRAINT `fk_Bookings_has_Facility_partitions_Bookings1`
+  `Facilities_id` INT NOT NULL ,
+  PRIMARY KEY (`Reservations_id`, `Facilities_id`) ,
+  INDEX `fk_Reservation_has_Facilities_Facilities1_idx` (`Facilities_id` ASC) ,
+  INDEX `fk_Reservation_has_Facilities_Reservations1_idx` (`Reservations_id` ASC) ,
+  CONSTRAINT `fk_Reservation_has_Facilities_Reservations1`
     FOREIGN KEY (`Reservations_id` )
     REFERENCES `176690-lasbok`.`Reservations` (`id` )
     ON DELETE CASCADE
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Bookings_has_Facility_partitions_Facility_partitions1`
-    FOREIGN KEY (`Facility_partitions_id` )
+  CONSTRAINT `fk_Reservation_has_Facilities_Facilities1`
+    FOREIGN KEY (`Facilities_id` )
     REFERENCES `176690-lasbok`.`Facilities` (`id` )
     ON DELETE CASCADE
     ON UPDATE NO ACTION)
@@ -203,8 +203,8 @@ CREATE  TABLE IF NOT EXISTS `176690-lasbok`.`Partition_has_Doors` (
   `Partitions_id` INT NOT NULL ,
   `Doors_id` INT NOT NULL ,
   PRIMARY KEY (`Partitions_id`, `Doors_id`) ,
-  INDEX `fk_Physical_partitions_has_Doors_Doors1` (`Doors_id` ASC) ,
-  INDEX `fk_Physical_partitions_has_Doors_Physical_partitions1` (`Partitions_id` ASC) ,
+  INDEX `fk_Physical_partitions_has_Doors_Doors1_idx` (`Doors_id` ASC) ,
+  INDEX `fk_Physical_partitions_has_Doors_Physical_partitions1_idx` (`Partitions_id` ASC) ,
   CONSTRAINT `fk_Physical_partitions_has_Doors_Physical_partitions1`
     FOREIGN KEY (`Partitions_id` )
     REFERENCES `176690-lasbok`.`Partitions` (`id` )
@@ -229,14 +229,14 @@ CREATE  TABLE IF NOT EXISTS `176690-lasbok`.`Servers` (
   `software_version` VARCHAR(10) NOT NULL ,
   `Sites_id` INT NOT NULL ,
   PRIMARY KEY (`id`, `Sites_id`) ,
-  INDEX `fk_Servers_Sites1` (`Sites_id` ASC) ,
+  INDEX `fk_Servers_Sites1_idx` (`Sites_id` ASC) ,
   CONSTRAINT `fk_Servers_Sites1`
     FOREIGN KEY (`Sites_id` )
     REFERENCES `176690-lasbok`.`Sites` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
-COMMENT = 'This table contains information needed to reach the servers ' /* comment truncated */;
+COMMENT = 'This table contains information needed to reach the servers  /* comment truncated */ /*that control the relay cards.*/';
 
 
 -- -----------------------------------------------------
@@ -248,8 +248,8 @@ CREATE  TABLE IF NOT EXISTS `176690-lasbok`.`Facility_has_Partitions` (
   `Facilities_id` INT NOT NULL ,
   `Partitions_id` INT NOT NULL ,
   PRIMARY KEY (`Facilities_id`, `Partitions_id`) ,
-  INDEX `fk_Facilities_has_Partitions_Partitions1` (`Partitions_id` ASC) ,
-  INDEX `fk_Facilities_has_Partitions_Facilities1` (`Facilities_id` ASC) ,
+  INDEX `fk_Facilities_has_Partitions_Partitions1_idx` (`Partitions_id` ASC) ,
+  INDEX `fk_Facilities_has_Partitions_Facilities1_idx` (`Facilities_id` ASC) ,
   CONSTRAINT `fk_Facilities_has_Partitions_Facilities1`
     FOREIGN KEY (`Facilities_id` )
     REFERENCES `176690-lasbok`.`Facilities` (`id` )
@@ -274,8 +274,8 @@ CREATE  TABLE IF NOT EXISTS `176690-lasbok`.`Prices` (
   `price` INT NOT NULL DEFAULT 0 ,
   `per_head` TINYINT(1) NOT NULL DEFAULT false ,
   PRIMARY KEY (`Customer_categories_id`, `Facilities_id`) ,
-  INDEX `fk_Customer_categories_has_Facilities_Facilities1` (`Facilities_id` ASC) ,
-  INDEX `fk_Customer_categories_has_Facilities_Customer_categories1` (`Customer_categories_id` ASC) ,
+  INDEX `fk_Customer_categories_has_Facilities_Facilities1_idx` (`Facilities_id` ASC) ,
+  INDEX `fk_Customer_categories_has_Facilities_Customer_categories1_idx` (`Customer_categories_id` ASC) ,
   UNIQUE INDEX `Customer_categories_id_UNIQUE` (`Customer_categories_id` ASC, `Facilities_id` ASC) ,
   CONSTRAINT `fk_Customer_categories_has_Facilities_Customer_categories1`
     FOREIGN KEY (`Customer_categories_id` )
@@ -327,8 +327,8 @@ CREATE  TABLE IF NOT EXISTS `176690-lasbok`.`User_has_User_roles` (
   `Users_user_name` VARCHAR(32) NOT NULL ,
   `User_roles_id` INT NOT NULL ,
   PRIMARY KEY (`Users_user_name`, `User_roles_id`) ,
-  INDEX `fk_Users_has_User_roles_User_roles1` (`User_roles_id` ASC) ,
-  INDEX `fk_Users_has_User_roles_Users1` (`Users_user_name` ASC) ,
+  INDEX `fk_Users_has_User_roles_User_roles1_idx` (`User_roles_id` ASC) ,
+  INDEX `fk_Users_has_User_roles_Users1_idx` (`Users_user_name` ASC) ,
   CONSTRAINT `fk_Users_has_User_roles_Users1`
     FOREIGN KEY (`Users_user_name` )
     REFERENCES `176690-lasbok`.`Users` (`user_name` )
@@ -353,39 +353,40 @@ CREATE  TABLE IF NOT EXISTS `176690-lasbok`.`Buildings` (
   `description` VARCHAR(45) NULL ,
   `Sites_id` INT NOT NULL ,
   PRIMARY KEY (`id`) ,
-  INDEX `fk_Buildings_Sites1` (`Sites_id` ASC) ,
+  INDEX `fk_Buildings_Sites1_idx` (`Sites_id` ASC) ,
   CONSTRAINT `fk_Buildings_Sites1`
     FOREIGN KEY (`Sites_id` )
     REFERENCES `176690-lasbok`.`Sites` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
-COMMENT = 'This table contains information about buildings at a site. B' /* comment truncated */;
+COMMENT = 'This table contains information about buildings at a site. B /* comment truncated */ /*uildings aren't mandatory at a site, but can be useful for sites with more than one buildings. They are used mainly to group facilities together.*/';
 
 
 -- -----------------------------------------------------
 -- Table `176690-lasbok`.`Buildings_has_Facilities`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `176690-lasbok`.`Building_has_Facilities` ;
+DROP TABLE IF EXISTS `176690-lasbok`.`Buildings_has_Facilities` ;
 
-CREATE  TABLE IF NOT EXISTS `176690-lasbok`.`Building_has_Facilities` (
+CREATE  TABLE IF NOT EXISTS `176690-lasbok`.`Buildings_has_Facilities` (
   `Buildings_id` INT NOT NULL ,
   `Facilities_id` INT NOT NULL ,
   PRIMARY KEY (`Buildings_id`, `Facilities_id`) ,
-  INDEX `fk_Building_has_Facilities_Facilities1` (`Facilities_id` ASC) ,
-  INDEX `fk_Building_has_Facilities_Buildings1` (`Buildings_id` ASC) ,
-  CONSTRAINT `fk_Building_has_Facilities_Buildings1`
+  INDEX `fk_Buildings_has_Facilities_Facilities1_idx` (`Facilities_id` ASC) ,
+  INDEX `fk_Buildings_has_Facilities_Buildings1_idx` (`Buildings_id` ASC) ,
+  CONSTRAINT `fk_Buildings_has_Facilities_Buildings1`
     FOREIGN KEY (`Buildings_id` )
     REFERENCES `176690-lasbok`.`Buildings` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Building_has_Facilities_Facilities1`
+  CONSTRAINT `fk_Buildings_has_Facilities_Facilities1`
     FOREIGN KEY (`Facilities_id` )
     REFERENCES `176690-lasbok`.`Facilities` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
+USE `176690-lasbok` ;
 
 
 SET SQL_MODE=@OLD_SQL_MODE;
