@@ -23,9 +23,9 @@ $app->get('/building/:id', function ($id) use ($app, $db) {
 $app->post('/building', function () use ($app, $db) {
 	// TODO: Kontrollera om användaren har behörighet att skapa byggnad
 	
-	$name = $app->request->post('name');
-	$description = $app->request->post('description');
-	$site = $app->request->post('site');
+	$name = trim($app->request->post('name'));
+	$description = trim($app->request->post('description'));
+	$site = intval($app->request->post('site'));
 	
 	if (!(strlen($name) > 0 && strlen($description) > 0 &&
 			intval($site) > 0)) {
@@ -58,13 +58,13 @@ $app->put('/building/:id', function ($id) use ($app, $db) {
 		$app->halt(400, 'Bad request');
 	}
 	
-	$id = $app->request->post('id');
-	$name = $app->request->post('name');
-	$description = $app->request->post('description');
-	$site = $app->request->post('site');
+	$id = intval($app->request->post('id'));
+	$name = trim($app->request->post('name'));
+	$description = trim($app->request->post('description'));
+	$site = intval($app->request->post('site'));
 	
-	if (!(intval($id) > 0 && strlen($name) > 0 &&
-			strlen($description) > 0 &&  intval($site) > 0)) {
+	if (!($id > 0 && strlen($name) > 0 &&
+			strlen($description) > 0 && $site > 0)) {
 		$app->halt(400, 'Bad request');
 	}
 	
@@ -119,9 +119,9 @@ $app->post('/building/:id/facilities', function ($id) use ($app, $db) {
 		$app->halt(400, 'Bad request');
 	}
 	
-	$facility = $app->request->post('facility');
+	$facility = intval($app->request->post('facility'));
 	
-	if (intval($facility) < 1) {
+	if ($facility < 1) {
 		$app->halt(400, 'Bad request');
 	}
 	
