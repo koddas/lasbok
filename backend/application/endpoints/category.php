@@ -19,11 +19,11 @@ $app->get('/category/:id', function ($id) use ($app, $db) {
 
 $app->post('/category', function () use ($app, $db) {
 	// TODO: Kontrollera om användaren har behörighet att skapa categori
-	$description = $app->request->post('description');
+	$description = trim($app->request->post('description'));
 		
 	$values = array('description' => $description);
 	
-	$db->insert('User_roles', $values);
+	$db->insert('Customer_categories', $values);
 	
 	$errors = $db->error();
 	
@@ -46,8 +46,8 @@ $app->put('/category/:id', function ($id) use ($app, $db) {
 		$app->halt(400, 'Bad request');
 	}
 	
-	$id = $app->request->post('id');
-	$description = $app->request->post('description');
+	$id = intval($app->request->post('id'));
+	$description = trim($app->request->post('description'));
 	
 	if (!(strlen($id) > 0 && strlen($description) > 0 )) {
 		$app->halt(400, 'Bad request');
