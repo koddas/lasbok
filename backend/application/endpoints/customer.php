@@ -21,22 +21,20 @@ $app->get('/customer/:id', function ($id) use ($app, $db) {
 
 $app->post('/customer', function () use ($app, $db) {
 	// TODO: Kontrollera om användaren har behörighet att skapa kund
-	$id = $app->request->post('id');
-	$name = $app->request->post('name');
-	$contact_name = $app->request->post('contact_name');
-	$phone_number = $app->request->post('phone_number');
-	$email = $app->request->post('email');
-	$postal_address = $app->request->post('postal_address');
-	$invoicing_address = $app->request->post('invoicing_address');
-	$comments = $app->request->post('comments');
+	$name = intval($app->request->post('name'));
+	$contact_name = trim($app->request->post('contact_name'));
+	$phone_number = trim($app->request->post('phone_number'));
+	$email = trim($app->request->post('email'));
+	$postal_address = trim($app->request->post('postal_address'));
+	$invoicing_address = trim($app->request->post('invoicing_address'));
+	$comments = trim($app->request->post('comments'));
 	
-	if (!(strlen($name) > 0 && strlen($contact_name) &&
-			strlen($phone_number) > 0 && strlen($email) > 0 &&
-			strlen($postal_address) < 0 )) {
+	if (!(strlen($name) > 0 && strlen($phone_number) > 0 &&
+			strlen($email) > 0 && strlen($postal_address) < 0 )) {
 		$app->halt(400, 'Bad request');
 	}
 	
-	$values = array('id' => $id, 'name' => $name,
+	$values = array('name' => $name,
 			'contact_name' => $contact_name, 'phone_number' => $phone_number,
 			'email' => $email, 'postal_address' => $postal_address,
 			'invoicing_address' => $invoicing_address, 'comments' => $comments);
@@ -50,7 +48,7 @@ $app->post('/customer', function () use ($app, $db) {
 			$app->response()->status(201);
 			break;
 		case 23000:
-			$app->halt(409, "Building '$id' already exists");
+			$app->halt(409, "Building '$name' already exists");
 			break;
 		default:
 			$app->halt(500, $errors[2]);
@@ -64,17 +62,16 @@ $app->get('/customer/:id', function ($id) use ($app, $db) {
 		$app->halt(400, 'Bad request');
 	}
 	
-	$id = $app->request->post('id');
-	$name = $app->request->post('name');
-	$contact_name = $app->request->post('contact_name');
-	$phone_number = $app->request->post('phone_number');
-	$email = $app->request->post('email');
-	$postal_address = $app->request->post('postal_address');
-	$invoicing_address = $app->request->post('invoicing_address');
+	$id = intval($app->request->post('id'));
+	$name = trim($app->request->post('name'));
+	$contact_name = trim($app->request->post('contact_name'));
+	$phone_number = trim($app->request->post('phone_number'));
+	$email = trim($app->request->post('email'));
+	$postal_address = trim($app->request->post('postal_address'));
+	$invoicing_address = trim($app->request->post('invoicing_address'));
 	$comments = $app->request->post('comments');
 	
-	if (!(intval($id) > 0 && strlen($name) > 0 &&
-			strlen($contact_name) > 0 &&  strlen($phone_number) > 0 &&
+	if (!(strlen($name) > 0 && strlen($phone_number) > 0 &&
 			strlen($email) > 0 && strlen($postal_address) > 0 )) {
 		$app->halt(400, 'Bad request');
 	}
