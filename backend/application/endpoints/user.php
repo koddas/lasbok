@@ -19,12 +19,12 @@ $app->get('/user/:id', function ($id) use ($app, $db) {
 
 $app->post('/user', function () use ($app, $db) {
 	// TODO: Kontrollera om användaren har behörighet att skapa användare
-	$username = $app->request->post('username');
-	$password = $app->request->post('password');
-	$first_name = $app->request->post('first_name');
-	$last_name = $app->request->post('last_name');
+	$username = trim($app->request->post('username'));
+	$password = trim($app->request->post('password'));
+	$first_name = trim($app->request->post('first_name'));
+	$last_name = trim($app->request->post('last_name'));
 	
-	if (!(strlen($username) > 0 && strlen($password) &&
+	if (!(strlen($username) > 0 && strlen($password) > 0 &&
 		  strlen($first_name) > 0 && strlen($last_name) > 0)) {
 		$app->halt(400, 'Bad request');
 	}
@@ -48,10 +48,10 @@ $app->post('/user', function () use ($app, $db) {
 
 $app->put('/user/:id', function ($id) use ($app, $db) {
 	// TODO: Kontrollera om användaren har behörighet att ändra användare
-	$password = $app->request->put('password');
-	$current_password = $app->request->put('current_password');
-	$first_name = $app->request->put('first_name');
-	$last_name = $app->request->put('last_name');
+	$password = trim($app->request->put('password'));
+	$current_password = trim($app->request->put('current_password'));
+	$first_name = trim($app->request->put('first_name'));
+	$last_name = trim($app->request->put('last_name'));
 	
 	if (strlen($current_password) < 1) {
 		$app->halt(400, 'Bad request');
@@ -68,15 +68,15 @@ $app->put('/user/:id', function ($id) use ($app, $db) {
 		if ($comma_needed) {
 			$first_name_part = ',';
 		}
-		$first_name_part += " first_name = '$first_name'";
+		$first_name_part .= " first_name = '$first_name'";
 		$comma_needed = true;
 	}
 	$last_name_part = '';
 	if (strlen($last_name) > 0) {
 		if ($comma_needed) {
-			$first_name_part = ',';
+			$last_name_part = ',';
 		}
-		" last_name = '$last_name'";
+		$last_name_part .= " last_name = '$last_name'";
 	}
 	
 	$db->query("UPDATE Users SET"
@@ -96,6 +96,8 @@ $app->put('/user/:id', function ($id) use ($app, $db) {
 $app->delete('/user/:id', function ($id) use ($app, $db) {
 	// TODO: Kontrollera om användaren har behörighet att ta bort användare
 	$db->delete('Users', array('user_name' => $id));
+	
+	$app->response()->status(200);
 });
 
 $app->get('/user/:id/roles', function ($id) use ($app, $db) {
@@ -146,5 +148,7 @@ $app->delete('/user/:id/roles/:rid', function ($id, $rid) use ($app, $db) {
 								   'User_roles_id' => $rid));
 	
 	$db->delete('User_has_User_roles', $values);
+	
+	$app->response()->status(200);
 });
 ?>

@@ -1,13 +1,13 @@
 <?php
 $app->get('/card', function () use ($app, $db) {
-	$cols = array('*');
+	$cols = array('id', array('Sites_id' => 'site'), 'ipaddress');
 	$cards = $db->select('Relay_cards', $cols);
 	
 	echo json_encode($cards, JSON_FORCE_OBJECT | JSON_UNESCAPED_UNICODE);
 });
 
 $app->get('/card/:id', function ($id) use ($app, $db) {
-	$cols = array('*');
+	$cols = array('id', array('Sites_id' => 'site'), 'ipaddress');
 	$where = array('id' => $id);
 	$cards = $db->select('Relay_cards', $cols, $where);
 	if (count($users) > 0) {
@@ -19,10 +19,10 @@ $app->get('/card/:id', function ($id) use ($app, $db) {
 
 $app->post('/card', function () use ($app, $db) {
 	// TODO: Kontrollera om användaren har behörighet att skapa kort
-	$site = $app->request->post('site');
+	$site = intval($app->request->post('site'));
 	$address = inet_pton($app->request->post('address'));
 	
-	if (strlen($site) < 1 || !$address) {
+	if ($site < 1 || !$address) {
 		$app->halt(400, 'Bad request');
 	}
 	
@@ -47,7 +47,7 @@ $app->post('/card', function () use ($app, $db) {
 
 $app->put('/card/:id', function ($id) use ($app, $db) {
 	// TODO: Kontrollera om användaren har behörighet att ändra kort
-	$site = $app->request->put('site');
+	$site = intval($app->request->put('site'));
 	$address = inet_pton($app->request->put('address'));
 	
 	if (strlen($site) < 1 || !$address) {

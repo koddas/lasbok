@@ -55,9 +55,9 @@ GET		/building/:id											Hämta info om byggnader
 POST	/building												Skapa ny byggnad
 PUT		/building/:id											Uppdatera byggnad
 DELETE	/building/:id											Ta bort byggnad
-GET		/building/:id/facililties								Lista alla byggnader på en anläggning
-POST	/building/:id/facililties								Lägg till byggnad på en anläggning
-DELETE	/building/:id/facililties/:id							Ta bort en byggnad från en anläggning
+GET		/building/:id/facililties								Lista alla faciliteter i en byggnad
+POST	/building/:id/facililties								Lägg till faciliteter i en byggnad
+DELETE	/building/:id/facililties/:id							Ta bort en facilitet från en byggnad
 GET		/site													Lista alla anläggningar
 GET		/site/:id												Hämta info om en anläggning
 POST	/site													Skapa ny anläggning
