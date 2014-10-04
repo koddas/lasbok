@@ -112,9 +112,9 @@ $app->get('/facility/:id/partitions', function ($id) use ($app, $db) {
 	$select = array('Facility_has_Partitions.Partitions_id' => $id);
 	$join = array('[>]Facility_has_Partitions' => array('id' => 'Facilities_id'));
 
-	$building = $db->select('Facilities', $join, $cols, $select);
+	$facility = $db->select('Facilities', $join, $cols, $select);
 	
-	echo json_encode($building, JSON_FORCE_OBJECT | JSON_UNESCAPED_UNICODE);
+	echo json_encode($facility, JSON_FORCE_OBJECT | JSON_UNESCAPED_UNICODE);
 });
 
 $app->post('/facility/:id/partitions', function ($id) use ($app, $db) {
@@ -175,9 +175,9 @@ $app->get('/facility/:id/prices', function ($id) use ($app, $db) {
 	$select = array('Prices.Facilities_id' => $id);
 	$join = array('[>]Prices' => array('id' => 'Facilities_id'));
 
-	$building = $db->select('Facilities', $join, $cols, $select);
+	$facility = $db->select('Facilities', $join, $cols, $select);
 	
-	echo json_encode($building, JSON_FORCE_OBJECT | JSON_UNESCAPED_UNICODE);
+	echo json_encode($facility, JSON_FORCE_OBJECT | JSON_UNESCAPED_UNICODE);
 });
 
 $app->post('/facility/:id/prices', function ($id) use ($app, $db) {
@@ -227,10 +227,10 @@ $app->delete('/facility/:id/prices/:pid', function ($id, $pid) use ($app, $db) {
 	$facility = intval($app->request->delete('facility'));
 	$customer_category = intval($app->request->delete('customer_category'));
 	
-	$partitions = array('Facilities_id' => $facility,
+	$price = array('Facilities_id' => $facility,
 			'Customer_category_id' => $customer_category);
 		
-	$db->delete('Prices', $partitions);
+	$db->delete('Prices', $price);
 	
 	$app->response()->status(200);
 });
