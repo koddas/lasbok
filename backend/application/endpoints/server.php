@@ -1,6 +1,8 @@
 <?php
 $app->get('/server', function () use ($app, $db) {
-	$cols = array('*');
+	$cols = array('id', 'public_ip', 'software_version',
+				array('Sites_id' => 'site')
+	);
 	
 	$server = $db->select('Servers', $cols);
 	
@@ -14,7 +16,9 @@ $app->get('/server/:id', function ($id) use ($app, $db) {
 	if ($id < 1) {
 		$app->halt(400, 'Bad request');
 	}
-	$cols = array('*');
+	$cols = array('id', 'public_ip', 'software_version',
+				array('Sites_id' => 'site')
+	);
 	$select = array('id' => $id);
 	$servers = $db->select('Servers', $cols, $select);
 	
@@ -28,7 +32,7 @@ $app->get('/server/:id', function ($id) use ($app, $db) {
 $app->post('/server', function () use ($app, $db) {
 	$id = intval($app->request->post('id'));
 	$ip = intval($app->request->post('ip'));
-	$software_version = $app->request->post('software_version');
+	$software_version = trim($app->request->post('software_version'));
 	$site = intval($app->request->post('site'));
 	
 	if (!($id > 0 && $ip > 0 && $site > 0 &&
@@ -59,7 +63,7 @@ $app->post('/server', function () use ($app, $db) {
 $app->put('/server/:id', function ($id) use ($app, $db) {
 	$id = intval($app->request->put('id'));
 	$ip = intval($app->request->put('ip'));
-	$software_version = $app->request->put('software_version');
+	$software_version = trim($app->request->put('software_version'));
 	$sites_id = intval($app->request->put('site'));
 	
 	if (!($id > 0 && $ip > 0 && $sites_id > 0 &&
