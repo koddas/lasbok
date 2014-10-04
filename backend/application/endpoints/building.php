@@ -105,8 +105,8 @@ $app->get('/building/:id/facilities', function ($id) use ($app, $db) {
 	}
 	
 	$cols = array('id', 'facilities_id');
-	$select = array('Building_has_facilities.Buildings_id' => $id);
-	$join = array('[>]Building_has_facilities'=> array('id' => 'Facilities_id'));
+	$select = array('Building_has_Facilities.Buildings_id' => $id);
+	$join = array('[>]Building_has_Facilities' => array('id' => 'Buildings_id'));
 
 	$roles = $db->select('Buildings', $join, $cols, $select);
 	
@@ -128,7 +128,7 @@ $app->post('/building/:id/facilities', function ($id) use ($app, $db) {
 	$facilities = array('Buildings_id' => $id,
 			'Facilities_id' => $facility);
 	
-	$db->insert('Building_has_facilities', $facilities);
+	$db->insert('Building_has_Facilities', $facilities);
 	
 	$errors = $db->error();
 	
@@ -154,7 +154,7 @@ $app->delete('/building/:id/facilities/:fid', function ($id, $fid) use ($app, $d
 	$facilities = array('AND' => array('Buildings_id' => $id,
 			'Facilities_id' => $fid));
 		
-	$db->delete('Building_has_facilities', $facilities);
+	$db->delete('Building_has_Facilities', $facilities);
 	
 	$app->response()->status(200);
 });
