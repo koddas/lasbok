@@ -1,7 +1,13 @@
 <?php
 $app->get('/reservation', function () use ($app, $db) {
-	$cols = array('start_date', 'end_date', 'Customers_id',
-			'description', 'Customer_categories_id');
+	$cols = array(
+			'id', array('Customers_id' => 'customer'),
+			array('Customer_categories_id' => 'customer_category'),
+			array('Sites_id' => 'site'),
+			'description',
+			'start_date', 'end_date',
+			'is_preliminary', 'is_verified', 'lock_site',
+			'number_of_guests', 'quoted_price', 'extras');
 	
 	$reservation = $db->select('Reservations', $cols);
 	
@@ -12,8 +18,14 @@ $app->get('/reservation/:id', function ($id) use ($app, $db) {
 	if (intval($id) < 1) {
 		$app->halt(400, 'Bad request');
 	}
-	$cols = array('id', 'description', 'start_date', 'end_date',
-			'number_of_guests', 'Customers_id', 'Customer_types_id');
+	$cols = array(
+			'id', array('Customers_id' => 'customer'),
+			array('Customer_categories_id' => 'customer_category'),
+			array('Sites_id' => 'site'),
+			'description',
+			'start_date', 'end_date',
+			'is_preliminary', 'is_verified', 'lock_site',
+			'number_of_guests', 'quoted_price', 'extras');
 	$select = array('id' => $id);
 	$reservation = $db->select('Reservations', $cols, $select);
 	
@@ -26,36 +38,35 @@ $app->get('/reservation/:id', function ($id) use ($app, $db) {
 
 $app->post('/reservation', function () use ($app, $db) {
 	// TODO: Kontrollera dubbelbokningar
-	$id = $app->request->post('id');
-	$customers_id = $app->request->post('Customers_id');
-	$customer_categories_id = $app->request->post('Customer_categories_id');
-	$Sites_id = $app->request->post('Sites_id');
-	$description = $app->request->post('description');
-	$start_date = $app->request->post('start_date');
-	$end_date = $app->request->post('end_date');
-	$is_preliminary = $app->request->post('is_preliminary');
-	$is_verified = $app->request->post('is_verified');
-	$lock_site = $app->request->post('lock_site');
-	$number_of_guests = $app->request->post('number_of_guests');
-	$quoted_price = $app->request->post('quoted_price');
-	$extras = $app->request->post('extras');
-	$start_date = strtotime(start_date);
-	$end_date = strtotime(end_date);
+	$customer = intval($app->request->post('customer'));
+	$customer_category = intval($app->request->post('customer_category'));
+	$site = intval($app->request->post('site'));
+	$description = trim($app->request->post('description'));
+	$start_date = strtotime(trim($app->request->post('start_date')));
+	$end_date = strtotime(trim($app->request->post('end_date')));
+	$is_preliminary = boolval($app->request->post('is_preliminary'));
+	$is_verified = boolval($app->request->post('is_verified'));
+	$lock_site = boolval($app->request->post('lock_site'));
+	$number_of_guests = intval($app->request->post('number_of_guests'));
+	$quoted_price = intval($app->request->post('quoted_price'));
+	$extras = trim($app->request->post('extras'));
 	
-	if (!(intval($customers_id) > 0 && intval($customer_categries_id) > 0 &&
-			intval($sites_id) > 0 && strlen($site) > 0 &&
-			$start_date > 0 && $start_date < $end_date)) {
+	if (!($customer > 0 && $customer_category > 0 &&
+			$site > 0 && $start_date > 0 && $start_date < $end_date)) {
 		$app->halt(400, 'Bad request');
 	}
 	
 	$values = array(
-			'Customers_id' => $customers_id,
-			'Customer_categories_id' => $customer_categories_id,
-			'sites_id' => $Sites_id,
+			'Customers_id' => $customer,
+			'Customer_categories_id' => $customer_category,
+			'Sites_id' => $site,
 			'description' => $description,
 			'start_date' => $start_date,
 			'end_date' => $end_date,
+			'is_preliminary' => $is_preliminary,
+			'is_verified' => $is_verified,
 			'number_of_guests' => $number_of_guests,
+			'quoted_price' => $quoted_price,
 			'extras' => $extras);
 	
 	$db->insert('Reservations', $values);
@@ -74,36 +85,36 @@ $app->post('/reservation', function () use ($app, $db) {
 
 $app->put('/reservation/:id', function ($id) use ($app, $db) {
 	// TODO: Kontrollera om användaren har behörighet att förändra reservationer
-	$id = $app->request->post('id');
-	$customers_id = $app->request->post('Customers_id');
-	$customer_categories_id = $app->request->post('Customer_categories_id');
-	$Sites_id = $app->request->post('Sites_id');
-	$description = $app->request->post('description');
-	$start_date = $app->request->post('start_date');
-	$end_date = $app->request->post('end_date');
-	$is_preliminary = $app->request->post('is_preliminary');
-	$is_verified = $app->request->post('is_verified');
-	$lock_site = $app->request->post('lock_site');
-	$number_of_guests = $app->request->post('number_of_guests');
-	$quoted_price = $app->request->post('quoted_price');
-	$extras = $app->request->post('extras');
-	$start_date = strtotime(start_date);
-	$end_date = strtotime(end_date);
+	$id = intval($app->request->post('id'));
+	$customer = intval($app->request->post('customer'));
+	$customer_category = intval($app->request->post('customer_category'));
+	$site = intval($app->request->post('site'));
+	$description = trim($app->request->post('description'));
+	$start_date = strtotime(trim($app->request->post('start_date')));
+	$end_date = strtotime(trim($app->request->post('end_date')));
+	$is_preliminary = boolval($app->request->post('is_preliminary'));
+	$is_verified = boolval($app->request->post('is_verified'));
+	$lock_site = boolval($app->request->post('lock_site'));
+	$number_of_guests = intval($app->request->post('number_of_guests'));
+	$quoted_price = intval($app->request->post('quoted_price'));
+	$extras = trim($app->request->post('extras'));
 	
-	if (!(intval($customers_id) > 0 && intval($customer_categries_id) > 0 &&
-			intval($sites_id) > 0 && strlen($site) > 0 &&
-			$start_date > 0 && $start_date < $end_date)) {
-		$app->halt(400, 'Bad request');
-	}
+	if (!($id > 0 && $customer > 0 && $customer_category > 0 &&
+			$site > 0 && $start_date > 0 && $start_date < $end_date)) {
+				$app->halt(400, 'Bad request');
+			}
 	
 	$values = array(
-			'Customers_id' => $customers_id,
-			'Customer_categories_id' => $customer_categories_id,
-			'sites_id' => $Sites_id,
+			'Customers_id' => $customer,
+			'Customer_categories_id' => $customer_category,
+			'Sites_id' => $site,
 			'description' => $description,
 			'start_date' => $start_date,
 			'end_date' => $end_date,
+			'is_preliminary' => $is_preliminary,
+			'is_verified' => $is_verified,
 			'number_of_guests' => $number_of_guests,
+			'quoted_price' => $quoted_price,
 			'extras' => $extras);
 	
 	$where = array('id' => $id);
@@ -117,7 +128,7 @@ $app->put('/reservation/:id', function ($id) use ($app, $db) {
 			$app->response()->status(201);
 			break;
 		case 23000:
-			$app->halt(409, "User role '$name' already exists");
+			$app->halt(409, "Reservation '$id' already exists");
 			break;
 		default:
 			$app->halt(500, $errors[2]);
@@ -137,7 +148,9 @@ $app->delete('/reservation/:id', function ($id) use ($app, $db) {
 });
 
 $app->get('/reservation/:id/facilities', function ($id) use ($app, $db) {
-	$cols = array('Reservations_id', 'Facility_partitions_id');
+	$cols = array(
+				array('Reservations_id' => 'reservation'),
+				array('Facilities_id' => 'facility'));
 
 	$reservation = $db->select('Reservation_has_Facilities', $cols);
 	
@@ -145,16 +158,16 @@ $app->get('/reservation/:id/facilities', function ($id) use ($app, $db) {
 });
 
 $app->post('/reservation/:id/facilities', function ($id) use ($app, $db) {
-	$reservations_id = $app->request->post('Reservations_id');
-	$facility_partitions_id = $app->request->post('Facility_partitions_id');
+	$reservation = intval($app->request->post('reservation'));
+	$facility = intval($app->request->post('facility'));
 	
-	if (!(intval($reservations_id) > 0 && intval($facility_partitions_id) > 0)) {
+	if (!($reservation > 0 && $facility > 0)) {
 		$app->halt(400, 'Bad request');
 	}
 	
 	$values = array(
-			'Reservations_id' => $reservations_id,
-			'Facility_partitions_id' => $facility_partitions_id
+			'Reservations_id' => $reservation,
+			'Facility_partitions_id' => $facility
 	);
 	
 	$db->insert('Reservation_has_Facilities', $values);
@@ -174,20 +187,20 @@ $app->post('/reservation/:id/facilities', function ($id) use ($app, $db) {
 $app->delete('/reservation/:id/facilities/:fid', function ($id, $fid) use ($app, $db) {
 	// TODO: Kontrollera om användaren har behörighet att ta bort fasiliteter från reservationer
 	
-	if (intval($reservatins_id) < 1 && intval(facility_partitions_id) < 1) {
+	if (intval($id) < 1 && intval($fid) < 1) {
 		$app->halt(400, 'Bad request');
 	}
 	
 	$values = array(
-			'Reservations_id' => $reservations_id,
-			'Facility_partitions_id' => $facility_partitions_id
+			'Reservations_id' => $id,
+			'Facility_partitions_id' => $fid
 	);
 	
 	$db->delete('Reservation_has_Facilities', $values);
 });
 
 $app->get('/reservation/search/by/:customer', function ($customer) use ($app, $db) {
-	if (intval($id) < 1) {
+	if (intval($customer) < 1) {
 		$app->halt(400, 'Bad request');
 	}
 	$cols = array('id', 'Customers_id');
@@ -221,8 +234,10 @@ $app->get('/reservation/search/from/:start/to/:stop', function ($start, $stop) u
 
 $app->get('/reservation/search/from/:start/to/:stop/by/:customer',
 		  function ($start, $stop, $customer) use ($app, $db) {
-	$cols = array('start_date', 'end_date', 'Customers_id',
-		'description', 'Customer_categories_id');
+	$cols = array('start_date', 'end_date',
+				array('Customers_id' => 'customer'),
+				'description',
+				array('Customer_categories_id' => 'customer_category'));
 		  	
 	$where = array($id,
 		'LIMIT' => array($start, $stop));
