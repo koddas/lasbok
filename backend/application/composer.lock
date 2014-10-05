@@ -1,9 +1,10 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
+        "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "This file is @generated automatically"
     ],
-    "hash": "368adc7bdad13b260c7d15bbffe925ae",
+    "hash": "981ed42d30d4f02eca12aa7ab77e758c",
     "packages": [
         {
             "name": "catfan/medoo",
@@ -11,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/catfan/Medoo.git",
-                "reference": "ad9158c1def40a552073cdb445fe693646f4d9fd"
+                "reference": "74bd6abd1bdf692ad36c137b03337daed8c28e4a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/catfan/Medoo/zipball/ad9158c1def40a552073cdb445fe693646f4d9fd",
-                "reference": "ad9158c1def40a552073cdb445fe693646f4d9fd",
+                "url": "https://api.github.com/repos/catfan/Medoo/zipball/74bd6abd1bdf692ad36c137b03337daed8c28e4a",
+                "reference": "74bd6abd1bdf692ad36c137b03337daed8c28e4a",
                 "shasum": ""
             },
             "require": {
@@ -24,10 +25,11 @@
                 "php": ">=5.1"
             },
             "suggest": {
-                "ext-pdo-mssql": "For MSSQL databases",
-                "ext-pdo-mysql": "For MySQL databases",
+                "ext-pdo-mysql": "For MySQL or MariaDB databases",
                 "ext-pdo-pqsql": "For PostgreSQL databases",
-                "ext-pdo-sqlite": "For SQLite databases"
+                "ext-pdo-sqlite": "For SQLite databases",
+                "ext-pdo_dblib": "For MSSQL databases on Liunx/UNIX platform",
+                "ext-pdo_sqlsrv": "For MSSQL databases on Windows platform"
             },
             "type": "framework",
             "autoload": {
@@ -49,28 +51,94 @@
             "homepage": "http://medoo.in",
             "keywords": [
                 "database",
+                "mssql",
                 "mysql",
-                "sql"
+                "sql",
+                "sqlite"
             ],
-            "time": "2013-11-03 11:50:15"
+            "time": "2014-10-04 17:08:43"
         },
         {
-            "name": "slim/slim",
-            "version": "2.3.5",
+            "name": "league/oauth2-server",
+            "version": "3.2.4",
             "source": {
                 "type": "git",
-                "url": "https://github.com/codeguy/Slim.git",
-                "reference": "3dec4f9ee2e9c204a9f334afd72abc174c1b792e"
+                "url": "https://github.com/thephpleague/oauth2-server.git",
+                "reference": "13cd0cacdf1e9ae23fa073d4408a336246babb8e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/codeguy/Slim/zipball/3dec4f9ee2e9c204a9f334afd72abc174c1b792e",
-                "reference": "3dec4f9ee2e9c204a9f334afd72abc174c1b792e",
+                "url": "https://api.github.com/repos/thephpleague/oauth2-server/zipball/13cd0cacdf1e9ae23fa073d4408a336246babb8e",
+                "reference": "13cd0cacdf1e9ae23fa073d4408a336246babb8e",
                 "shasum": ""
             },
             "require": {
-                "ext-mcrypt": "*",
+                "php": ">=5.4.0"
+            },
+            "replace": {
+                "lncd/oauth2": "*"
+            },
+            "require-dev": {
+                "league/phpunit-coverage-listener": "~1.0",
+                "mockery/mockery": "~0.8"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.2.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "League\\OAuth2\\Server": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Alex Bilbie",
+                    "email": "hello@alexbilbie.com",
+                    "homepage": "http://www.alexbilbie.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "A lightweight and powerful OAuth 2.0 authorization and resource server library with support for all the core specification grants. This library will allow you to secure your API with OAuth and allow your applications users to approve apps that want to access their data from your API.",
+            "keywords": [
+                "Authentication",
+                "api",
+                "auth",
+                "authorization",
+                "oauth",
+                "oauth2",
+                "protect",
+                "resource",
+                "secure",
+                "server"
+            ],
+            "time": "2014-09-08 21:01:33"
+        },
+        {
+            "name": "slim/slim",
+            "version": "2.4.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/codeguy/Slim.git",
+                "reference": "4906b77a07c7bd6ff1a99aea903e940a2d4fa106"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/codeguy/Slim/zipball/4906b77a07c7bd6ff1a99aea903e940a2d4fa106",
+                "reference": "4906b77a07c7bd6ff1a99aea903e940a2d4fa106",
+                "shasum": ""
+            },
+            "require": {
                 "php": ">=5.3.0"
+            },
+            "suggest": {
+                "ext-mcrypt": "Required for HTTP cookie encryption"
             },
             "type": "library",
             "autoload": {
@@ -96,7 +164,7 @@
                 "rest",
                 "router"
             ],
-            "time": "2013-10-31 02:05:09"
+            "time": "2014-04-05 18:33:59"
         }
     ],
     "packages-dev": [
@@ -109,6 +177,7 @@
     "stability-flags": {
         "catfan/medoo": 20
     },
+    "prefer-stable": false,
     "platform": [
 
     ],

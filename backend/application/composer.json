@@ -1,6 +1,7 @@
 {
     "require": {
         "slim/slim": "2.*",
-        "catfan/medoo": "dev-develop"
+        "catfan/medoo": "dev-develop",
+        "league/oauth2-server": "3.*"
     }
 }
