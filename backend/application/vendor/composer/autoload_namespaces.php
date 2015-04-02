@@ -6,6 +6,6 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'Symfony\\Component\\HttpFoundation\\' => array($vendorDir . '/symfony/http-foundation'),
     'Slim' => array($vendorDir . '/slim/slim'),
-    'League\\OAuth2\\Server' => array($vendorDir . '/league/oauth2-server/src'),
 );
