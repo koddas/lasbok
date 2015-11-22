@@ -1,78 +1,217 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Strict//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Södra Skånes bokningssystem</title>
-<link rel="stylesheet" type="text/css" href="resources/stylesheets/main.css" />
-<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
-<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
-<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
-<script>
-	$(document).ready(function() {
-		$( "a.button" ).button({
-	    	  icons: {
-	    		  primary: "ui-icon-key"
-	    	  }
-	    });
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Södra Skånes lås- och bokningssystem</title>
 
-		$( "#submit-button" ).click(function() {
-			$('#create-user-form').submit();
-		});
-		
-		$( "#accordion" ).accordion({active: 1});
-	});
-</script>
+<link rel="stylesheet" type="text/css"
+	href="resources/stylesheets/main.css" />
+<link rel="stylesheet"
+	href="http://code.jquery.com/ui/1.11.3/themes/smoothness/jquery-ui.css" />
+
+<!-- Bootstrap -->
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"
+	integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ=="
+	crossorigin="anonymous">
+
+<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
 </head>
 <body>
-<div id="header">
-  <div id="logo"><span>[Logotyp]</span></div>
-  <span>Södra Skånes lås- och bokningssystem</span>
-</div>
-<div id="canvas">
-  <div id="content-header">
-    <div id="title">Välkommen, <span id="name">[namn]</span></div>
-    <div id="navigation-space"><a href="" class="button log-out-button">Logga ut</a></div>
-  </div>
-  <div id="content-body">
-    <div id="accordion">
-      <h3>Systemet</h3>
-      <div>
-        <p><a href="main.html">Startsidan</a></p>
-        <p><a href="main.html">Bokningsvyn</a></p>
-        <p><a href="main.html">Logga ut</a></p>
-      </div>
-      <h3>Användare och behörigheter</h3>
-      <div>
-        <p><a href="list_users.html">Användare</a></p>
-        <p><a href="list_privileges.html">Behörigheter</a></p>
-      </div>
-      <h3>Anläggningar</h3>
-      <div>
-        <p><a href="">Anläggning</a></p>
-        <p><a href="">Priser</a></p>
-      </div>
-      <h3>Kunder</h3>
-      <div>
-        <p><a href="">Kunder</a></p>
-        <p><a href="">Kundtyper</a></p>
-      </div>
-      <h3>Lås och tillträde</h3>
-      <div>
-        <p><a href="">Lägg till användare</a></p>
-        <p><a href="">Hantera användare</a></p>
-        <p><a href="">Hantera behörigheter</a></p>
-      </div>
-    </div>
-  </div>
-  <div id="content">
-    <div class="content-box">
-      <form action="users.html" method="post" id="create-privilege-form" name="create-privilege-form">
-        <span class="label">Behörighetsnamn</span><input type="textfield" name="first_name" id="first_name" /><br />
-        <span class="label">Beskrivning</span><textarea name="last_name" id="last_name" /></textarea><br />
-        <a href="#" class="button submit-button" id="submit-button">Skapa behörighet</a>
-      </form>
-    </div>
-  </div>
-</div>
+	<div id="canvas" class="container-fluid">
+		<div id="header" class="row">
+			<div id="logo" class="col-xs-2 col-lg-1">
+				<span>[Logotyp]</span>
+			</div>
+			<h1 class="col-xs-8 col-lg-4">Södra Skånes lås- och
+				bokningssystem</h1>
+		</div>
+		<div id="content-header" class="row">
+			<div id="title" class="col-xs-7 col-sm-4 col-md-3 col-lg-3">
+				Välkommen, <span id="name">[namn]</span>
+			</div>
+			<div id="navigation-space"
+				class="col-xs-5 col-sm-5 col-md-3 col-lg-3">
+				<a href="" class="button">Logga ut</a>
+			</div>
+		</div>
+		<div id="content-body">
+			<div class="panel-group col-xs-12 col-sm-5 col-md-3 col-lg-3"
+				id="accordion" role="tablist" aria-multiselectable="false">
+				<div class="panel panel-default">
+					<div class="panel-heading" role="tab" id="systemTab">
+						<h3 class="panel-title">
+							<a role="button" data-toggle="collapse" data-parent="#accordion"
+								href="#systemCollapse" aria-expanded="true"
+								aria-controls="systemCollapse" class="accordion-button">Systemet</a>
+						</h3>
+					</div>
+					<div id="systemCollapse" class="panel-collapse collapse"
+						role="tabpanel" aria-labelledby="systemTab">
+						<div class="panel-body">
+							<p>
+								<a href="main.html">Startsidan</a>
+							</p>
+							<p>
+								<a href="main.html">Bokningsvyn</a>
+							</p>
+							<p>
+								<a href="main.html">Logga ut</a>
+							</p>
+						</div>
+					</div>
+				</div>
+				<div class="panel panel-default">
+					<div class="panel-heading" role="tab" id="userTab">
+						<h3 class="panel-title">
+							<a role="button" data-toggle="collapse" data-parent="#accordion"
+								href="#userCollapse" aria-expanded="true"
+								aria-controls="userCollapse" class="accordion-button">Användare
+								och behörigheter</a>
+						</h3>
+					</div>
+					<div id="userCollapse" class="panel-collapse collapse"
+						role="tabpanel" aria-labelledby="userTab">
+						<div class="panel-body">
+							<p>
+								<a href="list_users.html">Användare</a>
+							</p>
+							<p>
+								<a href="list_privileges.html">Behörigheter</a>
+							</p>
+						</div>
+					</div>
+				</div>
+				<div class="panel panel-default">
+					<div class="panel-heading" role="tab" id="siteTab">
+						<h3 class="panel-title">
+							<a role="button" data-toggle="collapse" data-parent="#accordion"
+								href="#siteCollapse" aria-expanded="true"
+								aria-controls="siteCollapse" class="accordion-button">Anläggningar</a>
+						</h3>
+					</div>
+					<div id="siteCollapse" class="panel-collapse collapse"
+						role="tabpanel" aria-labelledby="siteTab">
+						<div class="panel-body">
+							<p>
+								<a href="">Anläggning</a>
+							</p>
+							<p>
+								<a href="">Priser</a>
+							</p>
+						</div>
+					</div>
+				</div>
+				<div class="panel panel-default">
+					<div class="panel-heading" role="tab" id="customerTab">
+						<h3 class="panel-title">
+							<a role="button" data-toggle="collapse" data-parent="#accordion"
+								href="#customerCollapse" aria-expanded="true"
+								aria-controls="#customerCollapse" class="accordion-button">Kunder</a>
+						</h3>
+					</div>
+					<div id="customerCollapse" class="panel-collapse collapse"
+						role="tabpanel" aria-labelledby="siteTab">
+						<div class="panel-body">
+							<p>
+								<a href="">Kunder</a>
+							</p>
+							<p>
+								<a href="">Kundtyper</a>
+							</p>
+						</div>
+					</div>
+				</div>
+				<div class="panel panel-default">
+					<div class="panel-heading" role="tab" id="lockTab">
+						<h3 class="panel-title">
+							<a role="button" data-toggle="collapse" data-parent="#accordion"
+								href="#lockCollapse" aria-expanded="true"
+								aria-controls="#lockCollapse" class="accordion-button">Lås
+								och tillträde</a>
+						</h3>
+					</div>
+					<div id="lockCollapse" class="panel-collapse collapse"
+						role="tabpanel" aria-labelledby="lockTab">
+						<div class="panel-body">
+							<p>
+								<a href="">Lägg till användare</a>
+							</p>
+							<p>
+								<a href="">Hantera användare</a>
+							</p>
+							<p>
+								<a href="">Hantera behörigheter</a>
+							</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-xs-12 col-sm-6 col-md-8 col-lg-6">
+		
+			<form action="privileges.html" method="post" id="add-privilege-form"
+				name="add-privilege-form" role="form" class="form-horizontal">
+				<div class="form-group">
+					<label class="control-label col-sm-5 col-md-5 col-lg-3">Behörighetsnamn:</label>
+					<div class="col-sm-7 col-md-5 col-lg-5">
+						<input type="textfield" name="name" id="name"
+							class="form-control">
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label col-sm-5 col-md-5 col-lg-3">Beskrivning:</label>
+					<div class="col-sm-7 col-md-5 col-lg-5">
+						<textarea name="description" id="description"
+							class="form-control"></textarea>
+					</div>
+				</div>
+				<a href="#" class="button submit-button" id="submit-button">Skapa
+					behörighet</a>
+			</form>
+		</div>
+	</div>
+
+	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	<script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+	<script type="text/javascript">
+    $.widget.bridge('uibutton', $.ui.button);
+  </script>
+
+	<!-- Include all compiled plugins (below), or include individual files as needed -->
+	<script
+		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"
+		integrity="sha512-K1qjQ+NcF2TYO/eI3M6v8EiNYZfA95pQumfvcVrTHtwQVDG+aHRqLi/ETn2uB+1JqwYqVG3LIvdm9lj6imS/pQ=="
+		crossorigin="anonymous"></script>
+	<script type="text/javascript">
+    $(function() {
+      $("a.button").uibutton({
+        icons : {
+          primary : "ui-icon-key"
+        }
+      });
+
+      $("#submit-button")
+      	.uibutton({
+          icons : {
+            primary : "ui-icon-check"
+          }
+        })
+        .click(function() {
+          $('#create-user-form').submit();
+        });
+
+      $("#userCollapse").addClass("in");
+    });
+  </script>
 </body>
 </html>
