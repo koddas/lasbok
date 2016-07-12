@@ -1,4 +1,6 @@
 {
+    "name": "Södra Skånes lås- och bokningssystem",
+    "version": "0.0.1",
     "require": {
         "slim/slim": "2.*",
         "catfan/medoo": "dev-develop",
